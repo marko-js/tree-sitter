@@ -1,0 +1,6 @@
+{
+  "extension": ["mts", "ts"],
+  "enable-source-maps": true,
+  "node-option": ["import=tsx"],
+  "timeout": 10000
+}

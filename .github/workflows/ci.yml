@@ -1,0 +1,62 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      # Fixtures are fetched from marko-js/htmljs-parser with degit; the
+      # parser the tests compare against is the published htmljs-parser.
+      - run: npm test
+
+  prebuild:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # native runners for each published prebuild target
+        os:
+          [
+            ubuntu-latest,
+            ubuntu-24.04-arm,
+            macos-13,
+            macos-latest,
+            windows-latest,
+          ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run prebuild
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prebuild-${{ matrix.os }}
+          path: prebuilds/**
+
+  wasm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # tree-sitter-cli downloads the wasi-sdk toolchain automatically.
+      - run: npm install
+      - run: npm run build:wasm
+      - run: npm run test:wasm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tree-sitter-marko-wasm
+          path: tree-sitter-marko.wasm

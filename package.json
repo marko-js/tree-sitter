@@ -1,0 +1,80 @@
+{
+  "name": "@marko/tree-sitter",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for the Marko templating language",
+  "keywords": [
+    "incremental",
+    "marko",
+    "parser",
+    "tree-sitter"
+  ],
+  "homepage": "https://github.com/marko-js/tree-sitter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/tree-sitter.git"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "files": [
+    "*.wasm",
+    "LICENSE",
+    "binding.gyp",
+    "bindings/node",
+    "grammar.js",
+    "prebuilds/**",
+    "queries",
+    "src/**",
+    "tree-sitter.json"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.3.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/degit": "^2.8.6",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.16",
+    "degit": "^2.8.4",
+    "htmljs-parser": "^5.10.2",
+    "mocha": "^10.2.0",
+    "node-gyp": "^11.0.0",
+    "prebuildify": "^6.0.1",
+    "tree-sitter": "^0.25.0",
+    "tree-sitter-cli": "^0.26.9",
+    "tsx": "^4.19.2",
+    "web-tree-sitter": "^0.26.9"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp rebuild",
+    "generate": "tree-sitter generate",
+    "install": "node-gyp-build",
+    "test": "mocha \"./__tests__/*.test.mts\"",
+    "prebuild": "prebuildify --napi --strip",
+    "build:wasm": "tree-sitter build --wasm -o tree-sitter-marko.wasm",
+    "test:wasm": "tsx tools/check-wasm.mts"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.marko",
+      "file-types": [
+        "marko"
+      ],
+      "injection-regex": "^marko$"
+    }
+  ]
+}

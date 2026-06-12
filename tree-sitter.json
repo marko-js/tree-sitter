@@ -1,0 +1,32 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "marko",
+      "camelcase": "Marko",
+      "title": "Marko",
+      "scope": "source.marko",
+      "path": ".",
+      "file-types": ["marko"],
+      "injection-regex": "^marko$",
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for the Marko templating language",
+    "links": {
+      "repository": "https://github.com/marko-js/tree-sitter"
+    }
+  },
+  "bindings": {
+    "c": false,
+    "go": false,
+    "node": true,
+    "python": false,
+    "rust": false,
+    "swift": false
+  }
+}

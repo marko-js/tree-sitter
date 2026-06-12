@@ -1,0 +1,92 @@
+name: Release
+
+# Publishes @marko/tree-sitter to npm when a v* tag is pushed, via npm's
+# trusted publishing (OIDC) — no NPM_TOKEN needed. Configure the trusted
+# publisher for @marko/tree-sitter at npmjs.com (package Settings ->
+# "Trusted Publisher") to point at this repo and this workflow file
+# (release.yml). The package ships prebuilt native bindings for every
+# supported platform plus the wasm build, so consumers never need a C
+# toolchain.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write # npm provenance
+
+jobs:
+  prebuild:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # native runners for each published prebuild target
+        os:
+          [
+            ubuntu-latest,
+            ubuntu-24.04-arm,
+            macos-13,
+            macos-latest,
+            windows-latest,
+          ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run prebuild
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prebuild-${{ matrix.os }}
+          # upload the platform subdirs under prebuilds/ (no leading prebuilds/)
+          path: prebuilds/**
+
+  wasm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # tree-sitter-cli downloads the wasi-sdk toolchain automatically.
+      - run: npm install
+      - run: npm run build:wasm
+      - run: npm run test:wasm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wasm
+          path: tree-sitter-marko.wasm
+
+  publish:
+    needs: [prebuild, wasm]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      # npm >= 11.5.1 is required for OIDC trusted publishing.
+      - run: npm install -g npm@latest
+      - run: npm install
+      # Refresh generated sources (src/parser.c etc.) so the published tree
+      # matches grammar.js exactly.
+      - run: npm run generate
+      # Gather every platform's prebuild back into prebuilds/ and the wasm
+      # build to the package root, matching package.json "files".
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: prebuild-*
+          path: prebuilds
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: wasm
+      - name: Show staged publish artifacts
+        run: |
+          ls -R prebuilds
+          ls -la tree-sitter-marko.wasm
+      # Authenticated via npm trusted publishing (OIDC); provenance is
+      # generated automatically. No token required.
+      - run: npm publish --provenance
