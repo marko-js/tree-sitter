@@ -19,22 +19,27 @@ jobs:
   prebuild:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        # native runners for each published prebuild target
+        # native runners for each published prebuild target. Windows is pinned
+        # to 2022: node-gyp can't yet detect Visual Studio 2026 on the newer
+        # windows-latest image.
         os:
           [
             ubuntu-latest,
             ubuntu-24.04-arm,
             macos-13,
             macos-latest,
-            windows-latest,
+            windows-2022,
           ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+      # Skip the package's node-gyp-build install script — prebuildify does the
+      # real build, so the install-time compile is redundant.
+      - run: npm install --ignore-scripts
       - run: npm run prebuild
       - uses: actions/upload-artifact@v4
         with:
