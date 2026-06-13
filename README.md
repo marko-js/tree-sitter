@@ -1,4 +1,4 @@
-# tree-sitter-marko
+# @marko/tree-sitter
 
 A [tree-sitter](https://tree-sitter.github.io/) grammar for the
 [Marko](https://markojs.com/) templating language.
@@ -7,9 +7,8 @@ It covers the full language: both authoring modes (HTML and
 concise/indentation-based), `${placeholders}`, tag variables, arguments and
 parameters, shorthand `#id`/`.class` and method attributes, attribute
 groups, statement tags, raw-text tags, `--` content blocks, and `$`
-scriptlets — all with the exact source ranges the Marko compiler sees, so
-the tree is reliable for highlighting, folding, structural editing, and
-tooling.
+scriptlets, all with the exact source ranges the Marko compiler sees, so the
+tree is reliable for highlighting, folding, structural editing, and tooling.
 
 ## Usage
 
@@ -17,7 +16,7 @@ With the node bindings:
 
 ```js
 const Parser = require("tree-sitter");
-const Marko = require("tree-sitter-marko");
+const Marko = require("@marko/tree-sitter");
 
 const parser = new Parser();
 parser.setLanguage(Marko);
@@ -46,17 +45,16 @@ npm run build        # tree-sitter generate && node-gyp rebuild
 npm run build:wasm   # tree-sitter-marko.wasm (the CLI fetches wasi-sdk itself)
 ```
 
-For editors, the grammar ships ready-to-use queries:
-
-- `queries/highlights.scm` — syntax highlighting captures
-- `queries/injections.scm` — embedded-language injections (see below)
+For editors, the grammar ships ready-to-use queries: `queries/highlights.scm`
+for syntax highlighting captures and `queries/injections.scm` for
+embedded-language injections (described below).
 
 ## Editors and tools
 
 Every integration consumes the same artifacts: the generated parser
-(`src/parser.c` + `src/scanner.c`), the queries in `queries/`, and — for
-embedded highlighting — the `typescript`, `css`, and `scss` grammars,
-installed in the host tool like any other language.
+(`src/parser.c` + `src/scanner.c`), the queries in `queries/`, and, for
+embedded highlighting, the `typescript`, `css`, and `scss` grammars installed
+in the host tool like any other language.
 
 ### tree-sitter CLI
 
@@ -71,14 +69,14 @@ npx tree-sitter highlight file.marko  # ANSI highlighting (--html for a page)
 `highlight` resolves the injected languages through the CLI config: run
 `tree-sitter init-config`, then make sure one of the `parser-directories`
 in `~/.config/tree-sitter/config.json` holds clones of
-`tree-sitter-typescript` (run `npm install --ignore-scripts` inside it —
+`tree-sitter-typescript` (run `npm install --ignore-scripts` inside it, as
 its queries reference its `tree-sitter-javascript` dependency),
 `tree-sitter-css`, and `tree-sitter-scss`. Note the loader only discovers
 grammars that have a `tree-sitter.json`.
 
 ### Neovim
 
-Neovim (0.10+) needs no plugins — compile the parser onto the runtime path
+Neovim (0.10+) needs no plugins. Compile the parser onto the runtime path
 and start treesitter for the filetype:
 
 ```sh
@@ -120,7 +118,7 @@ name = "marko"
 source = { git = "https://github.com/marko-js/tree-sitter", rev = "<commit>" }
 ```
 
-(or `source = { path = "/path/to/tree-sitter-marko" }` for a local
+(or `source = { path = "/path/to/tree-sitter" }` for a local
 checkout), then:
 
 ```sh
@@ -132,16 +130,16 @@ and copy the queries to `~/.config/helix/runtime/queries/marko/`.
 ### Zed
 
 Marko support in Zed is provided by the
-[marko-js/zed](https://github.com/marko-js/zed) extension, which
-bundles this grammar (via its `[grammars.marko]` entry pointing here), the
-language config, the editor queries, and the
+[marko-js/zed](https://github.com/marko-js/zed) extension, which bundles this
+grammar (via its `[grammars.marko]` entry pointing here), the language config,
+the editor queries, and the
 [Marko language server](https://github.com/marko-js/language-server). Install
-it from Zed's extension registry, or run **`zed: install dev extension`** on a
+it from Zed's extension registry, or run `zed: install dev extension` on a
 local checkout of that repo. Its `highlights.scm`/`injections.scm` are copies
-of the `queries/` here (used as-is — Zed evaluates the
+of the `queries/` here, used as-is: Zed evaluates the
 `#eq?`/`#any-of?`/`#not-any-of?` predicates, `injection.combined`, and the
-dynamic `@injection.language` dialects), and the Zed-specific `brackets.scm`
-and `outline.scm` are maintained in that extension repo.
+dynamic `@injection.language` dialects. The Zed-specific `brackets.scm` and
+`outline.scm` are maintained in that extension repo.
 
 ### VS Code
 
@@ -176,7 +174,7 @@ div.panel
     (element_end)))
 ```
 
-Nodes you will commonly query:
+Commonly queried nodes:
 
 | node                                                                                       | meaning                                                      |
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -199,71 +197,74 @@ A few structural notes:
 - `element_end` is a zero-width node marking where an element closes
   implicitly (concise dedent, void tags, self-closing, end of input).
   `concise_open_tag_end` is similarly zero-width (or covers a trailing `;`).
-- Delimiters are visible named tokens — `args_open`/`args_close`,
+- Delimiters are visible named tokens (`args_open`/`args_close`,
   `params_open`/`params_close`, `type_open`/`type_close`,
   `attr_group_open`/`attr_group_close`, `method_body_open`/
   `method_body_close`, `scriptlet_block_open`/`scriptlet_block_close`,
-  `placeholder_start`/`placeholder_end` — so bracket-matching and
+  `placeholder_start`/`placeholder_end`), so bracket-matching and
   punctuation queries can target them.
 - Whitespace is significant in Marko, so the grammar has no `extras`; text
   nodes contain their exact whitespace.
-- Invalid input produces an `ERROR` node from the first error onward —
+- Invalid input produces an `ERROR` node from the first error onward,
   matching how Marko itself reports a single error per template rather than
   guessing at recovery.
 
 ## Tag types
 
-Tag parsing in Marko depends on the tag: this grammar follows the
+Tag parsing in Marko depends on the tag. This grammar follows the
 [tags API](https://markojs.com/docs/reference/core-tag)'s `parseOptions` (and
-the vscode tmLanguage grammar it replaces):
+the vscode tmLanguage grammar it replaces), which sorts tags into three
+groups.
 
-- **void**: the html void elements plus `const`, `debug`, `id`, `let`,
-  `lifecycle`, `log`, `return` — no children, no closing tag
-- **raw text**: `script`, `style`, `html-script`, `html-style`,
-  `html-comment` — bodies are text and placeholders only
-- **statement**: `import`, `export`, `static`, `server`, `client` (plus
-  `class` for class-API compatibility) — the rest of the line (and indented
-  continuation) is a single embedded statement
+Void tags take no children and no closing tag: the html void elements plus
+`const`, `debug`, `id`, `let`, `lifecycle`, `log`, and `return`.
+
+Raw-text tags (`script`, `style`, `html-script`, `html-style`,
+`html-comment`) have bodies of text and placeholders only.
+
+Statement tags (`import`, `export`, `static`, `server`, `client`, plus
+`class` for class-API compatibility) treat the rest of the line, and any
+indented continuation, as a single embedded statement.
 
 ## Embedded languages
 
 Marko templates embed TypeScript and CSS throughout, and
-`queries/injections.scm` maps it all: TypeScript is injected into every
-expression position — placeholders, attribute values/spreads, arguments,
+`queries/injections.scm` maps it all. TypeScript is injected into every
+expression position: placeholders, attribute values/spreads, arguments,
 shorthand-method bodies, scriptlets, statement-tag bodies, and the
 pattern/default parts of tag variables and parameters.
 
 Statement tags split into two groups, mirroring how the compiler consumes
-them: `import`, `export`, and `class` are pass-through TypeScript — the
-keyword is part of the statement — so the whole element (keyword included)
-is injected and the keyword takes its color from the TS grammar. For
-`static`, `server`, and `client` the keyword is Marko syntax that the
-compiler strips, so only the body is injected and `highlights.scm` captures
-the keyword as `@keyword` (the tmLanguage grammar makes the same split).
-`<script>`/`<html-script>` bodies inject TypeScript and
-`<style>`/`<html-style>` bodies inject CSS — including their concise
-`script --` / `style --` block forms — with `injection.combined` merging
-chunks split by placeholders. `style` dialect shorthands are honored the
-way the compiler resolves them: the last shorthand segment names the
-injected language, so `<style.scss>` and `style.module.scss --` inject
-`scss` while plain `<style>` falls back to `css` (`html-style` is exempt —
-its shorthand is a real class attribute, not a dialect).
+them. `import`, `export`, and `class` are pass-through TypeScript, where the
+keyword is part of the statement, so the whole element (keyword included) is
+injected and the keyword takes its color from the TS grammar. For `static`,
+`server`, and `client` the keyword is Marko syntax that the compiler strips,
+so only the body is injected and `highlights.scm` captures the keyword as
+`@keyword` (the tmLanguage grammar makes the same split). `<script>`/
+`<html-script>` bodies inject TypeScript and `<style>`/`<html-style>` bodies
+inject CSS, including their concise `script --` / `style --` block forms,
+with `injection.combined` merging chunks split by placeholders. `style`
+dialect shorthands are honored the way the compiler resolves them: the last
+shorthand segment names the injected language, so `<style.scss>` and
+`style.module.scss --` inject `scss` while plain `<style>` falls back to
+`css`. `html-style` is exempt, since its shorthand is a real class attribute,
+not a dialect.
 
 Type annotations (tag var/param types, `<T>` type args/params) are captured
 as `@type` instead of injected: a bare type is not a valid TypeScript
 program, so flat coloring is the accurate option (the tmLanguage grammar
-makes the same approximation). One residual: the parameters of a shorthand
-method (`onClick(event) { … }`) inject as a whole TS program, which renders
-typed parameters slightly off — that position cannot be split without
-lookahead the scanner doesn't have.
+makes the same approximation). One residual case: the parameters of a
+shorthand method (`onClick(event) { … }`) inject as a whole TS program,
+which renders typed parameters slightly off, since that position cannot be
+split without lookahead the scanner doesn't have.
 
 ## Fidelity and development
 
 Marko's parser is [htmljs-parser](https://github.com/marko-js/htmljs-parser);
 this grammar's external scanner reimplements its state machine, and the test
 suite (`npm test`, Node 22) asserts the tree reproduces the parser's event
-stream with byte-precise ranges across the parser's full fixture suite —
-plus thousands of templates from the Marko ecosystem during development.
+stream with byte-precise ranges across the parser's full fixture suite, plus
+thousands of templates from the Marko ecosystem during development.
 
 The reference parser and its fixtures are always the same htmljs-parser
 revision: they are fetched together into `.cache/` with degit, so the suite
