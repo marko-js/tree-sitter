@@ -10,8 +10,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
       - run: npm install
@@ -26,26 +26,30 @@ jobs:
       fail-fast: false
       matrix:
         # native runners for each published prebuild target. Windows is pinned
-        # to 2022: node-gyp can't yet detect Visual Studio 2026 on the newer
-        # windows-latest image.
+        # to 2022 (node-gyp can't detect VS2026 on windows-latest yet); the
+        # macOS runner is arm64 and also cross-builds the Intel (x64) prebuild
+        # below, so no Intel runner is needed.
         os:
           [
             ubuntu-latest,
             ubuntu-24.04-arm,
-            macos-13,
             macos-latest,
             windows-2022,
           ]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
       # Skip the package's node-gyp-build install script — prebuildify does the
       # real build, so the install-time compile is redundant.
       - run: npm install --ignore-scripts
       - run: npm run prebuild
-      - uses: actions/upload-artifact@v4
+      # macOS runners are arm64; cross-build the Intel (x64) prebuild too so we
+      # don't need an Intel runner (N-API addons cross-compile cleanly).
+      - if: runner.os == 'macOS'
+        run: npm run prebuild -- --arch x64
+      - uses: actions/upload-artifact@v7
         with:
           name: prebuild-${{ matrix.os }}
           path: prebuilds/**
@@ -53,15 +57,15 @@ jobs:
   wasm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
       # tree-sitter-cli downloads the wasi-sdk toolchain automatically.
       - run: npm install
       - run: npm run build:wasm
       - run: npm run test:wasm
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: tree-sitter-marko-wasm
           path: tree-sitter-marko.wasm
