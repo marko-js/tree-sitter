@@ -4,7 +4,7 @@ module.exports =
   typeof process.versions.bun === "string"
     ? // Support `bun build --compile` by being statically analyzable enough to find the .node binding during build-time
       require(
-        `../../prebuilds/${process.platform}-${process.arch}/tree-sitter-marko.node`,
+        `../../prebuilds/${process.platform}-${process.arch}/@marko+tree-sitter.node`,
       )
     : require("node-gyp-build")(root);
 
