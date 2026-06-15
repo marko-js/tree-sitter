@@ -60,6 +60,7 @@
     }
   },
   "scripts": {
+    "bench": "node --import tsx bench/compare.mts",
     "build": "tree-sitter generate && node-gyp rebuild",
     "generate": "tree-sitter generate",
     "install": "node-gyp-build",
