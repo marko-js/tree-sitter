@@ -1,0 +1,33 @@
+================================================================================
+Fixture param-tag (htmljs target)
+================================================================================
+
+<for|x, y, { destrucure=default }| of=array></for>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern))
+        (param
+          (param_pattern))
+        (param
+          (param_pattern)))
+      (params_close))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

@@ -1,0 +1,63 @@
+================================================================================
+Concise line comment before fence text
+================================================================================
+
+div
+  // This is a single line comment
+  -- This is the body of the div tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (line_comment)
+    (html_block
+      (text))
+    (element_end)))
+
+================================================================================
+Concise block comment trailing text invalid (htmljs target)
+================================================================================
+
+p
+  /*
+  This is a
+  multiline comment
+  */ This is not okay
+  -- This is the body of the p tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (block_comment)
+    (MISSING element_end)))
+
+================================================================================
+Concise block comment before fence text
+================================================================================
+
+p
+  /*
+  This is a
+  multiline comment
+  */
+  -- This is the body of the p tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (block_comment)
+    (html_block
+      (text))
+    (element_end)))

@@ -1,0 +1,41 @@
+================================================================================
+Shorthand id and class in html-style close tags
+================================================================================
+
+<#foo.bar>
+</#foo.bar>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Concise shorthand div id
+================================================================================
+
+div#foo
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_id
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))

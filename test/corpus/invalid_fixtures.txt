@@ -1,0 +1,175 @@
+================================================================================
+Fixture invalid-closing-tag (htmljs target)
+================================================================================
+
+<div> </span> </div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag_start))
+  (text))
+
+================================================================================
+Fixture invalid-missing-tag-var (htmljs target)
+================================================================================
+
+<foo/, x=1/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))))
+
+================================================================================
+Fixture invalid-multiple-tag-params (htmljs target)
+================================================================================
+
+<foo|a||b|>
+
+</foo>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)))
+      (params_close))))
+
+================================================================================
+Fixture invalid-multiple-tag-type-params (htmljs target)
+================================================================================
+
+<foo<A><B>/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (type_open)
+    (type_expr)))
+
+================================================================================
+Fixture invalid-type-args-after-space (htmljs target)
+================================================================================
+
+<foo <A>>
+  hi
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_open)
+    (type_expr)))
+
+================================================================================
+Fixture invalid-type-params-after-args (htmljs target)
+================================================================================
+
+<foo(a)<A>/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (type_open)
+    (type_expr)))
+
+================================================================================
+Fixture invalid-type-params-after-method (htmljs target)
+================================================================================
+
+<foo(a){}<A>/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_close))))
+
+================================================================================
+Fixture invalid-type-params-after-params (htmljs target)
+================================================================================
+
+<foo|a|<A>/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)))
+      (params_close))
+    (type_open)
+    (type_expr)))
+
+================================================================================
+Fixture invalid-type-params-attr-arg (htmljs target)
+================================================================================
+
+<foo a<A>(b) c/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args_open)
+    (args_expr)))

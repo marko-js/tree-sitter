@@ -1,0 +1,111 @@
+================================================================================
+Complex attribute args and methods
+================================================================================
+
+<evo-details
+  ...item
+  open=(
+    Array.isArray(open) ? open.includes(index) : open === index
+  )
+  openChange(isOpen) {
+    interacted = true;
+    if (Array.isArray(open)) {
+      const currentOpen = open;
+    }
+  }/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_spread
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Argument attribute with expression
+================================================================================
+
+<div if(x > y)></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Argument attribute with multiple argument groups
+================================================================================
+
+<div for(var i = 0; i < 10; i++) (nonsense!)></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))))
+
+================================================================================
+Argument attribute with extra whitespace
+================================================================================
+
+<div if (x > y)>
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

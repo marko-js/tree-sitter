@@ -1,0 +1,202 @@
+================================================================================
+Fixture complex (htmljs target)
+================================================================================
+
+--
+This is top-level text
+--
+p
+    --
+    This is text that spans multiple lines.
+
+    <strong>You can throw in some HTML markup if you want!</strong>
+    --
+p
+    -----
+    If you really want to you can change the block delimiter for the following
+    reasons:
+    - Avoid accidentally ending a block
+    - To improve readability
+    -----
+i -- This text will be in italics
+b
+    -- This text will be bold
+    -- This is okay too
+app-hello
+    -- ${data.name} some html - <b>bold</b>
+
+pre
+    --
+    foo
+    --
+
+p
+    --
+    before
+    ${"placeholder"}
+    after
+    --
+
+p
+    --
+    before
+    <!--comment-->
+    after
+    --
+
+p
+    --
+    before
+    <div/>
+    after
+    --
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text)
+      (element
+        (open_tag_start)
+        (tag_name
+          (tag_name_fragment))
+        (open_tag_end)
+        (text)
+        (close_tag
+          (close_tag_start)
+          (close_tag_name)
+          (close_tag_end))
+        (element_end)))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text)
+      (text)
+      (text)
+      (text)
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (html_block
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (text)
+      (element
+        (open_tag_start)
+        (tag_name
+          (tag_name_fragment))
+        (open_tag_end)
+        (text)
+        (close_tag
+          (close_tag_start)
+          (close_tag_name)
+          (close_tag_end))
+        (element_end)))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (text)
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (html_comment)
+      (text)
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (element
+        (open_tag_start)
+        (tag_name
+          (tag_name_fragment))
+        (open_tag_end_self)
+        (element_end))
+      (text)
+      (text))
+    (element_end)))
+
+================================================================================
+Fixture complex-attr-name (htmljs target)
+================================================================================
+
+<assign data.someArray[0].doSomething('test').hello=1+1/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))

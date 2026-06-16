@@ -1,0 +1,73 @@
+================================================================================
+Empty placeholder expression in dynamic tag
+================================================================================
+
+<${}/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (placeholder_start))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Invalid placeholder expression in quoted attribute
+================================================================================
+
+<foo invalid="${;"></foo>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+No-escape placeholder in attribute and body text
+================================================================================
+
+<custom name="Hello $!{name}!">
+    Hello $!{name}!
+</custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start_raw)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

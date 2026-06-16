@@ -1,0 +1,141 @@
+================================================================================
+Double hyphen line in script concise text (htmljs target)
+================================================================================
+
+<!DOCTYPE html>
+html [lang="en"]
+  body
+    h1 -- Title
+    script -- var a = 'marko';
+
+--------------------------------------------------------------------------------
+
+(document
+  (doctype)
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_group_close))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (html_block
+          (text))
+        (element_end))
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (html_block
+          (text))
+        (element_end))
+      (element_end))
+    (element_end)))
+
+================================================================================
+Double hyphen block under script concise tag (htmljs target)
+================================================================================
+
+<!DOCTYPE html>
+html [lang="en"]
+  body
+    h1 -- Title
+    script
+      ---
+      var a = 'marko';
+      ---
+
+--------------------------------------------------------------------------------
+
+(document
+  (doctype)
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_group_close))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (html_block
+          (text))
+        (element_end))
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (html_block
+          (text))
+        (element_end))
+      (element_end))
+    (element_end)))
+
+================================================================================
+Double hyphen line under script concise tag (htmljs target)
+================================================================================
+
+<!DOCTYPE html>
+html [lang="en"]
+  body
+    h1 -- Title
+    script
+      -- var a = 'marko';
+
+--------------------------------------------------------------------------------
+
+(document
+  (doctype)
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_group_close))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (html_block
+          (text))
+        (element_end))
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (html_block
+          (text))
+        (element_end))
+      (element_end))
+    (element_end)))

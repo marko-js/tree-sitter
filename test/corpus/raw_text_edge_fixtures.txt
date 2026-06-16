@@ -1,0 +1,33 @@
+================================================================================
+Script/style raw text bodies with angle brackets (htmljs target)
+================================================================================
+
+<style>/* block comment within <style> */"string within \"<style>\""'string within \'<style>\''</style>
+<script>// line comment within <script>
+/* block comment within <script> */"string within \"<script>\""'string within \'<script>\''</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

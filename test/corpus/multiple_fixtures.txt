@@ -1,0 +1,31 @@
+================================================================================
+Fixture multiple-tags-on-line-close-next (htmljs target)
+================================================================================
+
+<span></span><div>
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

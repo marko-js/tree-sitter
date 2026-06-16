@@ -1,0 +1,398 @@
+================================================================================
+Fixture ts-function-type (htmljs target)
+================================================================================
+
+<div value=fn as (x: number) => string />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture ts-generic-complex (htmljs target)
+================================================================================
+
+<div value=x as Map<string, Array<Record<K, V>>> />
+<div value=x satisfies Map<string, Array<Record<K, V>>> />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture ts-generic-function-type (htmljs target)
+================================================================================
+
+<div value=fn as <T>(x: T) => T />
+<div value=fn as < T >(x: T) => T />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture ts-generic-simple (htmljs target)
+================================================================================
+
+<div value=x as Array<T> />
+<div value=x as Array< T > />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture ts-intersection-type (htmljs target)
+================================================================================
+
+<div value=x as A & B<T> />
+<div value=x as A & B< T > />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture ts-keyof-typeof (htmljs target)
+================================================================================
+
+<div value=x as keyof typeof T />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture ts-nested-generics (htmljs target)
+================================================================================
+
+<div value=x as Promise<Array<Record<string, number>>> />
+<div value=x as Promise< Array< Record< string, number > > > />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture ts-static-const-arrow-function-return-type (htmljs target)
+================================================================================
+
+static const a = (a: number, b: number): string => {
+  if (a < b) {
+    return "foo";
+  } else {
+    return "bar";
+  }
+};
+
+static const b = (a: number, b: number): () => string => () => {
+  if (a < b) {
+    return "foo";
+  } else {
+    return "bar";
+  }
+};
+
+static const c = (a: number, b: number): string => a < b ? "foo" : "bar";
+
+static const d = (a: number, b: number): () => string => () => a < b ? "foo" : "bar";
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture ts-static-type (htmljs target)
+================================================================================
+
+static type Foo = Array<
+  Bar
+>
+
+div
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture ts-tag-var-type-generic (htmljs target)
+================================================================================
+
+const/foo:Bar<
+  A,
+  B
+> = baz
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture ts-type-statement (htmljs target)
+================================================================================
+
+static interface Foo<
+  A,
+  B,
+> {
+  x: 1
+}
+
+static type Bar<
+  A,
+  B,
+> = A &
+    B
+
+static declare const x: Foo<
+  1,
+  2
+>;
+
+static const x: Foo<
+  1,
+  2
+> = baz;
+
+export interface Foo {
+  bar: () => Baz;
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture ts-unary-exression (htmljs target)
+================================================================================
+
+div foo=readonly bar=true
+div foo=val as readonly string[] bar=true
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))

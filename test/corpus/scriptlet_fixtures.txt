@@ -1,0 +1,534 @@
+================================================================================
+Scriptlet line inside fenced block
+================================================================================
+
+---
+$ var foo = 123;
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (scriptlet
+      (scriptlet_start)
+      (scriptlet_expr))))
+
+================================================================================
+Scriptlet after text inside fenced block
+================================================================================
+
+---
+hello $ var foo = 123;
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text)))
+
+================================================================================
+Scriptlet block inside fenced block
+================================================================================
+
+---
+$ {
+    var foo = 123;
+    var bar = 456;
+}
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (scriptlet
+      (scriptlet_start)
+      (scriptlet_block
+        (scriptlet_block_open)
+        (scriptlet_block_expr)
+        (scriptlet_block_close)))))
+
+================================================================================
+Scriptlet line terminated by semicolon in html block
+================================================================================
+
+<div>
+  $ let i = 10;
+  <while(i--)>
+    <test/>
+  </while>
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (scriptlet
+      (scriptlet_start)
+      (scriptlet_expr))
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (args
+        (args_open)
+        (args_expr)
+        (args_close))
+      (open_tag_end)
+      (text)
+      (element
+        (open_tag_start)
+        (tag_name
+          (tag_name_fragment))
+        (open_tag_end_self)
+        (element_end))
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture scriptlet-block (htmljs target)
+================================================================================
+
+$ {
+    var foo = 123;
+    var bar = 456;
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-division (htmljs target)
+================================================================================
+
+$ {
+    var foo = 123;
+    var bar = 1/2;
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-invalid-comment (htmljs target)
+================================================================================
+
+$ {
+    /
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (MISSING scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-multiline-comment (htmljs target)
+================================================================================
+
+$ {
+    /* foo */
+    var foo = 123;
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-nested (htmljs target)
+================================================================================
+
+$ {
+    var data = {
+        a:1
+        b:2
+    };
+
+    function foo() {
+        console.log([
+            { hello:'world' }
+        ]);
+
+        return null;
+    }
+
+    foo();
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-regex (htmljs target)
+================================================================================
+
+$ {
+    var foo = 123;
+    /\d/.test(foo);
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-single-line-comment (htmljs target)
+================================================================================
+
+$ {
+    // foo
+    var foo = 123;
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-template-literal-href (htmljs target)
+================================================================================
+
+$ {
+    var href = `https://ebay.com`;
+    console.log(href);
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-block-with-semi-colon (htmljs target)
+================================================================================
+
+$ { hello() };
+
+$ { hello() }  ;
+
+$ { hello() };
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close)))
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close)))
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_block
+      (scriptlet_block_open)
+      (scriptlet_block_expr)
+      (scriptlet_block_close))))
+
+================================================================================
+Fixture scriptlet-comment (htmljs target)
+================================================================================
+
+$ // +
+a
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture scriptlet-eof (htmljs target)
+================================================================================
+
+$ $global.
+
+<header>
+  <img.logo src=logo alt="Marko"/>
+</header>
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (shorthand_class
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end_self)
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture scriptlet-line (htmljs target)
+================================================================================
+
+$ var foo = 123;
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Fixture scriptlet-line-continue (htmljs target)
+================================================================================
+
+$ var foo = () => {
+    return 123;
+};
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Fixture scriptlet-line-continue-chain (htmljs target)
+================================================================================
+
+$ var foo;
+$ if (condition1) {
+    foo = 1;
+} else if (condition2) {
+    foo = 2;
+} else {
+    foo = 3;
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr))
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Fixture scriptlet-line-multiline-comments (htmljs target)
+================================================================================
+
+$ var str /* test */ = '' /**
+* Test
+*/
+
+<div>
+  Hello
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture scriptlet-line-no-middle (htmljs target)
+================================================================================
+
+tag $ var foo = 123;
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_name)
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture scriptlet-line-regex-open-bracket (htmljs target)
+================================================================================
+
+$ var foo = /[[]/;
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Fixture scriptlet-line-regex-open-curly (htmljs target)
+================================================================================
+
+$ var foo = /{/;
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Fixture scriptlet-line-template-literal (htmljs target)
+================================================================================
+
+$ var html = `
+<!doctype html>
+<div>${bar}</div>
+`
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Fixture scriptlet-line-trailing-line-comment (htmljs target)
+================================================================================
+
+$ var str = '' // a string
+
+<div>
+  Hello
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

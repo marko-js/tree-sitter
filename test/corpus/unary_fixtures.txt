@@ -1,0 +1,32 @@
+================================================================================
+Fixture unary-as-member-expression (htmljs target)
+================================================================================
+
+div a=class Test extends Other { hello() {} }
+div a=input.class Test extends Other { hello() {} }
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (attr_name)
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))

@@ -1,0 +1,71 @@
+================================================================================
+Fixture ignorePlaceholders-attr-double-escaped-dollar-placeholder (htmljs target)
+================================================================================
+
+<div data-foo="\\${foo}"></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture ignorePlaceholders-attr-escaped-dollar-placeholder (htmljs target)
+================================================================================
+
+<div data-foo="\${foo}"></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture ignorePlaceholders-attr-placeholder (htmljs target)
+================================================================================
+
+<div data-foo="${foo}"></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

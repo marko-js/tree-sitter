@@ -39,11 +39,9 @@
   },
   "devDependencies": {
     "@types/degit": "^2.8.6",
-    "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.16",
     "degit": "^2.8.4",
     "htmljs-parser": "^5.10.2",
-    "mocha": "^10.2.0",
     "node-gyp": "^11.0.0",
     "prebuildify": "^6.0.1",
     "tree-sitter": "^0.25.0",
@@ -63,7 +61,7 @@
     "build": "tree-sitter generate && node-gyp rebuild",
     "generate": "tree-sitter generate",
     "install": "node-gyp-build",
-    "test": "mocha \"./__tests__/*.test.mts\"",
+    "test": "tree-sitter test",
     "prebuild": "prebuildify --napi --strip",
     "build:wasm": "tree-sitter build --wasm -o tree-sitter-marko.wasm",
     "test:wasm": "tsx tools/check-wasm.mts"

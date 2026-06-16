@@ -1,0 +1,48 @@
+================================================================================
+Comments within open tags
+================================================================================
+
+<div foo="bar" /*this is a comment*/ hello="world" /* this is another comment */ ></div>
+<div foo="bar" // this is a test
+     hello="world" // this is another test
+></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

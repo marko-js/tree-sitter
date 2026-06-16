@@ -1,0 +1,24 @@
+================================================================================
+EOF placeholder edge forms (htmljs target)
+================================================================================
+
+<div>Hello ${(x</div>
+<div>Hello ${abc</div>
+<div>
+    Hello
+    $!{abc
+</div>
+<script>Hello ${abc
+<script>Hello $!{abc
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder_start))
+  (text))

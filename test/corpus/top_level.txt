@@ -1,0 +1,177 @@
+================================================================================
+Top-level statements and scriptlet
+================================================================================
+
+import type { Input } from "pkg";
+server const serverOnly = true;
+client const clientOnly = true;
+$ const value = 1;
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Top-level statement variants
+================================================================================
+
+export const x = 1;
+class {
+  onMount() {}
+}
+static { const y = 2 }
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Top-level style and script blocks
+================================================================================
+
+style {
+  .a { color: red; }
+}
+
+style.less {
+  @a: red;
+}
+
+style.scss {
+  $a: red;
+}
+
+style.ts {
+  const a = 1;
+}
+
+script {
+  const b = 2;
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Block variants for style and script
+================================================================================
+
+style.js {
+  const make = () => ({ color: "red" })
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Multiline export interface block
+================================================================================
+
+export interface Input<Open extends number | number[] | undefined>
+  extends Omit<Marko.HTML.UL, "aria-roledescription"> {
+  size?: "regular" | "large";
+  open?: Open;
+}
+
+<div/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end_self)
+    (element_end)))

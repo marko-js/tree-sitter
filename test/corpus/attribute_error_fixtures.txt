@@ -1,0 +1,123 @@
+================================================================================
+Attribute value EOF and missing-value errors (htmljs target)
+================================================================================
+
+<span class=>
+<div if(a==b
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_eq)))
+
+================================================================================
+Bound and tag-default ambiguity edge cases (htmljs target)
+================================================================================
+
+<a x:=foo>test</a>
+<a x := foo>test</a>
+<a:=foo>test</a>
+<a := foo>test</a>
+<a/bar:=foo>test</a>
+<a/bar := foo>test</a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

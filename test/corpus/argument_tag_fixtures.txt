@@ -1,0 +1,140 @@
+================================================================================
+Flow tag arguments with nested parens in fence
+================================================================================
+
+---
+<if(notEmpty(data.colors))>
+</if>
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (args
+        (args_open)
+        (args_expr)
+        (args_close))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))))
+
+================================================================================
+Flow tag arguments with quoted parens
+================================================================================
+
+<for (x in ["Hello ${name}!", "(World)"])></for>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Argument tags with self-closing variants
+================================================================================
+
+<for(x in y)></for>
+<ab('c')/>
+<a('b')/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Argument tag multiple groups with early error
+================================================================================
+
+<for(var i = 0; i < 10; i++) (nonsense!)></for>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))))
+
+================================================================================
+Argument tag with extra whitespace
+================================================================================
+
+<for (x in y)></for>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

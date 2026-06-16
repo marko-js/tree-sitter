@@ -1,0 +1,25 @@
+================================================================================
+Fixture void-tag-self-closed (htmljs target)
+================================================================================
+
+<div><img/></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end_self)
+      (element_end))
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

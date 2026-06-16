@@ -1,0 +1,23 @@
+================================================================================
+Fixture unclosed-tag-eof (htmljs target)
+================================================================================
+
+<div>
+  <span/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end_self)
+      (element_end))
+    (MISSING element_end)))

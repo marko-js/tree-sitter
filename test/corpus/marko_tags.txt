@@ -1,0 +1,102 @@
+================================================================================
+Marko flow and function tag names
+================================================================================
+
+<if=ready>
+  <const/>
+</if>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end_self)
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Tag pre-attribute syntax and special attributes
+================================================================================
+
+<for.item#row/list|item,index| (item) { item.id } on-click(ev){ emit(ev) } key=rowKey no-update-if=isHydrating>
+  <div/>
+</for>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (shorthand_id
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern))
+        (param
+          (param_pattern)))
+      (params_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end_self)
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

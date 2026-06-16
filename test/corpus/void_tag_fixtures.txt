@@ -1,0 +1,92 @@
+================================================================================
+Open html void tags without explicit closing slash
+================================================================================
+
+<div> A <img src="image1.png"> B <img src="image2.png"> C <img src="image3.png"> D </div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end)
+      (element_end))
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end)
+      (element_end))
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end)
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Void self-closing and invalid void close mismatch (htmljs target)
+================================================================================
+
+<img src="foo.png"/>
+---
+<img src="marko.png">
+    This is not allowed!
+</img>
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (html_block
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end)
+      (element_end))
+    (text)
+    (text)
+    (MISSING _block_close)))

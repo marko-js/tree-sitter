@@ -1,0 +1,213 @@
+================================================================================
+Fixture multiline-html-block (htmljs target)
+================================================================================
+
+---
+Hello <strong>Frank</strong>
+Line 2
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)))
+
+================================================================================
+Fixture multiline-html-block-empty (htmljs target)
+================================================================================
+
+---
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block))
+
+================================================================================
+Fixture multiline-html-block-missing-end (htmljs target)
+================================================================================
+
+div
+    --
+    Hello World
+    Hello Again
+
+script --
+    console.log('foo');
+    alert('bar');
+
+--
+Multi-line text
+Reached EOF
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text))
+    (element_end))
+  (html_block
+    (text)
+    (text)))
+
+================================================================================
+Fixture multiline-html-block-nested (htmljs target)
+================================================================================
+
+p
+    ---
+    Hello <strong>Frank</strong>
+    Line 2
+    ---
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (element
+        (open_tag_start)
+        (tag_name
+          (tag_name_fragment))
+        (open_tag_end)
+        (text)
+        (close_tag
+          (close_tag_start)
+          (close_tag_name)
+          (close_tag_end))
+        (element_end))
+      (text)
+      (text))
+    (element_end)))
+
+================================================================================
+Fixture multiline-html-block-nested-empty (htmljs target)
+================================================================================
+
+p
+    ---
+    ---
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block)
+    (element_end)))
+
+================================================================================
+Fixture multiline-html-block-same-line (htmljs target)
+================================================================================
+
+div --
+    Hello World
+    Hello Again
+    --
+    span --
+         Goodbye
+         --
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text))
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (html_block
+        (text))
+      (element_end))
+    (element_end)))
+
+================================================================================
+Fixture multiline-text-block (htmljs target)
+================================================================================
+
+---
+Line 1
+Line 2
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text)
+    (text)))
+
+================================================================================
+Fixture multiline-text-block-bad (htmljs target)
+================================================================================
+
+--
+A
+---
+B
+--
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text)
+    (MISSING _block_close)))
+
+================================================================================
+Fixture multiline-text-block-with-hyphens (htmljs target)
+================================================================================
+
+---
+- Line 1
+- Line 2
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text)
+    (text)))

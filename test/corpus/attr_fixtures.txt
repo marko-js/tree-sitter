@@ -1,0 +1,7175 @@
+================================================================================
+Fixture attr-complex (htmljs target)
+================================================================================
+
+<a a=123+256 b c= d=(a + (1/2) /* comment */)>test</a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-complex-functions (htmljs target)
+================================================================================
+
+tag a = function (x) { console.log("y") } b
+tag a = (x) => { console.log("y") } b
+tag a = x => { console.log("y") } b
+tag a = x => y b
+tag a = x => y + 1 b
+tag a = x => y = 1 b
+tag a = async x => { console.log("y") } b
+tag a = async function (x) { console.log("y") } b
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-complex-instanceof (htmljs target)
+================================================================================
+
+var a = 'foo' instanceof String
+
+tag a = 'foo' instanceof = String
+tag a = 'foo' instanceof := String
+tag a = 'foo' instanceof= String
+tag a = 'foo' instanceof;
+
+tag a = 'foo' instanceof-test;
+tag a = 'foo' instanceof_test;
+
+tag a = 'foo' instanceof, b
+
+<tag a = 'foo' instanceof></tag>
+<tag a = 'foo' instanceof/>
+
+tag a = 'foo' instanceofthing String
+
+tag a = 'foo' instanceof
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-complex-unary (htmljs target)
+================================================================================
+
+tag a = class b {}
+
+tag a = class {}, b
+
+<tag a = class {}></tag>
+
+<tag a = class {}/>
+
+tag a = classthing b
+
+tag a = testclass b
+
+tag a = test_class b
+
+tag a = test$class b
+
+tag a = test+class b {}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-concise-hyphens (htmljs target)
+================================================================================
+
+a b=c -- y
+
+a [b=c -- y]
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_group_close))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-escape-characters (htmljs target)
+================================================================================
+
+<div foo='\"hello\"'>
+    Hello World!
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-escaped-dollar (htmljs target)
+================================================================================
+
+<span data-foo="\$name"></span>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-inc-and-dec (htmljs target)
+================================================================================
+
+a foo=a++ bar=b--
+a foo=++a bar=--b
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-int-and-id (htmljs target)
+================================================================================
+
+<a data=123 data=abc></a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-literal-false (htmljs target)
+================================================================================
+
+<div data=false></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-literal-null (htmljs target)
+================================================================================
+
+<div data=null></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-literal-true (htmljs target)
+================================================================================
+
+<div data=true></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-literal-undefined (htmljs target)
+================================================================================
+
+<div data=undefined></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-method-shorthand (htmljs target)
+================================================================================
+
+<foo onclick(event){}/>
+
+<foo onclick(event){
+  console.log("hello");
+  event.preventDefault();
+}/>
+
+<foo onclick(event) {
+  console.log("hello");
+  event.preventDefault();
+}/>
+
+<foo onclick (event) {
+  console.log("hello");
+  event.preventDefault();
+}/>
+
+<foo(event){
+  console.log("hello");
+  event.preventDefault();
+}/>
+
+<foo(event) {
+  console.log("hello");
+  event.preventDefault();
+}/>
+
+<foo (event) {
+  console.log("hello");
+  event.preventDefault();
+}/>
+
+foo onclick(event){
+  console.log("hello");
+  event.preventDefault();
+}
+
+foo onclick(event) {
+  console.log("hello");
+  event.preventDefault();
+}
+
+foo onclick (event) {
+  console.log("hello");
+  event.preventDefault();
+}
+
+foo(event){
+  console.log("hello");
+  event.preventDefault();
+}
+
+foo(event) {
+  console.log("hello");
+  event.preventDefault();
+}
+
+foo (event) {
+  console.log("hello");
+  event.preventDefault();
+}
+
+<a b() { c / (d) }/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args
+      (args_open)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-method-shorthand-with-type-parameters (htmljs target)
+================================================================================
+
+<foo<A>(event: A){
+  console.log(event.type)
+}/>
+
+<foo<A> (event: A){
+  console.log(event.type)
+}/>
+
+<foo <A>(event: A){
+  console.log(event.type)
+}/>
+
+<foo <A> (event: A){
+  console.log(event.type)
+}/>
+
+<foo<A, B = string>(event: A & B){
+  console.log(event.type)
+}/>
+
+<foo<A, B = string> (event: A & B){
+  console.log(event.type)
+}/>
+
+<foo <A, B = string>(event: A & B){
+  console.log(event.type)
+}/>
+
+<foo <A, B = string> (event: A & B){
+  console.log(event.type)
+}/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-method-with-type-parameters (htmljs target)
+================================================================================
+
+<foo onclick<A>(event: A){
+  console.log(event.type)
+}/>
+
+<foo onclick<A> (event: A){
+  console.log(event.type)
+}/>
+
+<foo onclick <A>(event: A){
+  console.log(event.type)
+}/>
+
+<foo onclick <A> (event: A){
+  console.log(event.type)
+}/>
+
+<foo onclick<A, B = string>(event: A & B){
+  console.log(event.type)
+}/>
+
+<foo onclick<A, B = string> (event: A & B){
+  console.log(event.type)
+}/>
+
+<foo onclick <A, B = string>(event: A & B){
+  console.log(event.type)
+}/>
+
+<foo onclick <A, B = string> (event: A & B){
+  console.log(event.type)
+}/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-multi-line-comment (htmljs target)
+================================================================================
+
+<a a=123+456/* test */ b=a+'123'>test</a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-multi-line-string (htmljs target)
+================================================================================
+
+<div data="
+abc
+124"></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-name-with-html-chars (htmljs target)
+================================================================================
+
+tagname <span>hello frank</span>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (tag_name
+      (tag_name_fragment))
+    (type_open)
+    (type_expr)))
+
+================================================================================
+Fixture attr-nested-literal-regex (htmljs target)
+================================================================================
+
+<div hello=({ a: /[}]/ })/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-non-literal (htmljs target)
+================================================================================
+
+<div data=('a') a=a+b b='foo'+'bar' template-string=`foo`></div>
+span test='123'"abc"
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-operator-whitespace-eof (htmljs target)
+================================================================================
+
+tag a = 'foo' instanceof
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-operators-newline-after (htmljs target)
+================================================================================
+
+a= await
+y a
+a= new
+y a
+a= void
+y a
+a= typeof
+y a
+a= class
+Y {} a
+a=x .
+y a
+a=x !
+y a
+a=x *
+y a
+a=x /
+y a
+a=x **
+y a
+a=x %
+y a
+a=x &
+y a
+a=x &&
+y a
+a=x ^
+y a
+a=x ~
+y a
+a=x |
+y a
+a=x ||
+y a
+a=x ??
+y a
+a=x ?
+y :
+z a
+a=x ==
+y a
+a=x ===
+y a
+a=x !=
+y a
+a=x !==
+y a
+a=x <=
+y a
+a=x >=
+y a
+a=x &=
+y a
+a=x &&=
+y a
+a=x |=
+y a
+a=x ||=
+y a
+a=x ^=
+y a
+a=x ~=
+y a
+a=x >>=
+y a
+a=x >>>=
+y a
+a=x -=
+y a
+a=x /=
+y a
+a=x *=
+y a
+a=x **=
+y a
+a=x %=
+y a
+a=x +=
+y a
+a=x ++ +
+y a
+a=x +
+++ y a
+a=x >>
+y a
+a=x >>>
+y a
+a=x =>
+y a
+a=x =>
+( y ) a
+a= (x) =>
+{ console.log("y") } a
+a= async
+x =>
+{ console.log("y") }
+a
+a= function
+(x) { console.log("y") }
+a
+a= x =>
+{ console.log("y") }
+a
+a= async
+function
+(x) { console.log("y") }
+a
+
+<a= await
+y a/>
+<a= new
+y a/>
+<a= void
+y a/>
+<a= typeof
+y a/>
+<a= class
+Y
+{} a/>
+<a=x .
+y a/>
+<a=x !
+y a/>
+<a=x *
+y a/>
+<a=x /
+y a/>
+<a=x **
+y a/>
+<a=x %
+y a/>
+<a=x &
+y a/>
+<a=x &&
+y a/>
+<a=x ^
+y a/>
+<a=x ~
+y a/>
+<a=x |
+y a/>
+<a=x ||
+y a/>
+<a=x ??
+y a/>
+<a=x ?
+y :
+z a/>
+<a=x ==
+y a/>
+<a=x ===
+y a/>
+<a=x !=
+y a/>
+<a=x !==
+y a/>
+<a=x <=
+y a/>
+<a=x >=
+y </a>
+<a=x &=
+y a/>
+<a=x &&=
+y a/>
+<a=x |=
+y a/>
+<a=x ||=
+y a/>
+<a=x ^=
+y a/>
+<a=x ~=
+y a/>
+<a=x >>=
+y </a>
+<a=x >>>=
+y </a>
+<a=x -=
+y a/>
+<a=x /=
+y a/>
+<a=x *=
+y a/>
+<a=x **=
+y a/>
+<a=x %=
+y a/>
+<a=x +=
+y a/>
+<a=x ++ +
+y a/>
+<a=x +
+++ y a/>
+<a=x >>
+y </a>
+<a=x >>>
+y </a>
+<a=x
+( y ) a/>
+<a=x
+{ y } a/>
+<a=x
+=>
+y a/>
+<a=x
+=>
+( y ) a/>
+<a=x
+=>
+{ y } a/>
+<a=( x )
+{ y } a/>
+<a= (x)
+=>
+{ console.log("y") } a/>
+<a= async
+x
+=>
+{ console.log("y") }
+a/>
+<a= function
+(x)
+{ console.log("y") }
+a/>
+<a= x
+=>
+{ console.log("y") }
+a/>
+<a= async
+function
+(x)
+{ console.log("y") }
+a/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-operators-newline-before (htmljs target)
+================================================================================
+
+// newline continuations only work for html mode or enclosed concice attr groups.
+// here we sanity check that is the case.
+a=x
+.b
+
+<a=x
+.y a/>
+<a=x
+! y a/>
+<a=x
+* y a/>
+<a=x
+/ y a/>
+<a=x
+** y a/>
+<a=x
+% y a/>
+<a=x
+& y a/>
+<a=x
+&& y a/>
+<a=x
+^ y a/>
+<a=x
+~ y a/>
+<a=x
+| y a/>
+<a=x
+|| y a/>
+<a=x
+?? y a/>
+<a=x
+? y
+: z a/>
+<a=x
+== y a/>
+<a=x
+=== y a/>
+<a=x
+!= y a/>
+<a=x
+!== y a/>
+<a=x
+<= y a/>
+<a=x
+>= y </a>
+<a=x
+&= y a/>
+<a=x
+&&= y a/>
+<a=x
+|= y a/>
+<a=x
+||= y a/>
+<a=x
+^= y a/>
+<a=x
+~= y a/>
+<a=x
+>>= y </a>
+<a=x
+>>>= y </a>
+<a=x
+-= y a/>
+<a=x
+/= y a/>
+<a=x
+*= y a/>
+<a=x
+**= y a/>
+<a=x
+%= y a/>
+<a=x
++= y a/>
+<a=x ++
++ y a/>
+<a=x +
+++ y a/>
+<a=x
+>>y </a>
+<a=x
+>>> y </a>
+<a=x
+( y ) a/>
+<a=x
+{ y } a/>
+<a=x
+=>
+y a/>
+<a=x
+=>
+( y ) a/>
+<a=x
+=>
+{ y } a/>
+<a=( x )
+{ y } a/>
+<a= (x)
+=>
+{ console.log("y") } a/>
+<a= async
+x
+=>
+{ console.log("y") }
+a/>
+<a= function
+(x)
+{ console.log("y") }
+a/>
+<a= x
+=>
+{ console.log("y") }
+a/>
+<a= async
+function
+(x)
+{ console.log("y") }
+a/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (line_comment)
+  (line_comment)
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name)
+    (shorthand_class
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-operators-space-after (htmljs target)
+================================================================================
+
+a=x. y a
+a=x! y a
+a=x* y a
+a=x/ y a
+a=x** y a
+a=x% y a
+a=x& y a
+a=x&& y a
+a=x^ y a
+a=x~ y a
+a=x| y a
+a=x|| y a
+a=x?? y a
+a=x? y: z a
+a=x== y a
+a=x=== y a
+a=x!= y a
+a=x!== y a
+a=x<= y a
+a=x>= y a
+a=x&= y a
+a=x&&= y a
+a=x|= y a
+a=x||= y a
+a=x^= y a
+a=x~= y a
+a=x>>= y a
+a=x>>>= y a
+a=x-= y a
+a=x/= y a
+a=x*= y a
+a=x**= y a
+a=x%= y a
+a=x+= y a
+a=x++ + y a
+a=x+ ++ y a
+a=x> y a
+a=x>> y a
+a=x>>> y a
+a=x( y) a
+a=x{ y} a
+a=x=> y a
+a=x=> (y ) a
+a=x=> {y } a
+a=(x ) {y } a
+
+<a=x. y a/>
+<a=x! y a/>
+<a=x* y a/>
+<a=x/ y a/>
+<a=x** y a/>
+<a=x% y a/>
+<a=x& y a/>
+<a=x&& y a/>
+<a=x^ y a/>
+<a=x~ y a/>
+<a=x| y a/>
+<a=x|| y a/>
+<a=x?? y a/>
+<a=x? y: z a/>
+<a=x== y a/>
+<a=x=== y a/>
+<a=x!= y a/>
+<a=x!== y a/>
+<a=x<= y a/>
+<a=x>= y </a>
+<a=x&= y a/>
+<a=x&&= y a/>
+<a=x|= y a/>
+<a=x||= y a/>
+<a=x^= y a/>
+<a=x~= y a/>
+<a=x>>= y </a>
+<a=x>>>= y </a>
+<a=x-= y a/>
+<a=x/= y a/>
+<a=x*= y a/>
+<a=x**= y a/>
+<a=x%= y a/>
+<a=x+= y a/>
+<a=x++ + y a/>
+<a=x+ ++ y a/>
+<a=x> y </a>
+<a=x>> y </a>
+<a=x>>> y </a>
+<a=x(y ) a/>
+<a=z {y } a/>
+<a=x=> y a/>
+<a=x=> (y ) a/>
+<a=x=> {y } a/>
+<a=(x ) {y } a/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-operators-space-before (htmljs target)
+================================================================================
+
+a=x .y a
+a=x !y a
+a=x *y a
+a=x /y a
+a=x **y a
+a=x %y a
+a=x &y a
+a=x &&y a
+a=x ^y a
+a=x ~y a
+a=x |y a
+a=x ||y a
+a=x ??y a
+a=x ?y :z a
+a=x ==y a
+a=x ===y a
+a=x !=y a
+a=x !==y a
+a=x <=y a
+a=x >=y a
+a=x &=y a
+a=x &&=y a
+a=x |=y a
+a=x ||=y a
+a=x ^=y a
+a=x ~=y a
+a=x >>=y a
+a=x >>>=y a
+a=x -=y a
+a=x /=y a
+a=x *=y a
+a=x **=y a
+a=x %=y a
+a=x +=y a
+a=x++ +y a
+a=x+ ++y a
+a=x >y a
+a=x >>y a
+a=x >>>y a
+a=x (y ) a
+a=x {y } a
+a=x =>y a
+a=x => (y ) a
+a=x => {y } a
+a=( x ) {y } a
+
+<a=x .y a/>
+<a=x !y a/>
+<a=x *y a/>
+<a=x /y a/>
+<a=x **y a/>
+<a=x %y a/>
+<a=x &y a/>
+<a=x &&y a/>
+<a=x ^y a/>
+<a=x ~y a/>
+<a=x |y a/>
+<a=x ||y a/>
+<a=x ??y a/>
+<a=x ?y :z a/>
+<a=x ==y a/>
+<a=x ===y a/>
+<a=x !=y a/>
+<a=x !==y a/>
+<a=x <=y a/>
+<a=x >=y </a>
+<a=x &=y a/>
+<a=x &&=y a/>
+<a=x |=y a/>
+<a=x ||=y a/>
+<a=x ^=y a/>
+<a=x ~=y a/>
+<a=x >>=y </a>
+<a=x >>>=y </a>
+<a=x -=y a/>
+<a=x /=y a/>
+<a=x *=y a/>
+<a=x **=y a/>
+<a=x %=y a/>
+<a=x +=y a/>
+<a=x++ +y a/>
+<a=x+ ++y a/>
+<a=x >y </a>
+<a=x >>y </a>
+<a=x >>>y </a>
+<a=x (y ) a/>
+<a=x {y } a/>
+<a=x =>y a/>
+<a=x => (y ) a/>
+<a=x => {y } a/>
+<a=( x ) {y } a/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-operators-space-between (htmljs target)
+================================================================================
+
+a = x as string a
+a = x as keyof other a
+a= await y a
+a= new y a
+a= void y a
+a= typeof y a
+a= class A extends Y {} a
+a=x . y a
+a=x ! y a
+a=x * y a
+a=x / y a
+a=x ** y a
+a=x % y a
+a=x & y a
+a=x && y a
+a=x ^ y a
+a=x ~ y a
+a=x | y a
+a=x || y a
+a=x ?? y a
+a=x ? y : z a
+a=x == y a
+a=x === y a
+a=x != y a
+a=x !== y a
+a=x <= y a
+a=x >= y a
+a=x &= y a
+a=x &&= y a
+a=x |= y a
+a=x ||= y a
+a=x ^= y a
+a=x ~= y a
+a=x >>= y a
+a=x >>>= y a
+a=x -= y a
+a=x /= y a
+a=x *= y a
+a=x **= y a
+a=x %= y a
+a=x += y a
+a=x in;
+a=x in y a
+a=x in=y
+a=x in, y
+a=x instanceof y a
+a=x satisfies y a
+a=x ++ + y a
+a=x+ ++ y a
+a=x ++ y a
+a=x > y a
+a=x >> y a
+a=x >>> y a
+a=x ( y ) a
+a=x { y } a
+a=x => y a
+a=x => ( y ) a
+a=x => { y } a
+a=( x ) { y } a
+a = (x) => { console.log("y") } a
+a = async x => { console.log("y") } a
+a = function (x) { console.log("y") } a
+a = x => { console.log("y") } a
+a = async function (x) { console.log("y") } a
+
+<a= await y a/>
+<a= new y a/>
+<a= void y a/>
+<a= typeof y a/>
+<a= class A extends Y {} a/>
+<a=x . y a/>
+<a=x ! y a/>
+<a=x * y a/>
+<a=x / y a/>
+<a=x ** y a/>
+<a=x % y a/>
+<a=x & y a/>
+<a=x && y a/>
+<a=x ^ y a/>
+<a=x ~ y a/>
+<a=x | y a/>
+<a=x || y a/>
+<a=x ?? y a/>
+<a=x ? y : z a/>
+<a=x == y a/>
+<a=x === y a/>
+<a=x != y a/>
+<a=x !== y a/>
+<a=x <= y a/>
+<a=x >= y </a>
+<a=x &= y a/>
+<a=x &&= y a/>
+<a=x |= y a/>
+<a=x ||= y a/>
+<a=x ^= y a/>
+<a=x ~= y a/>
+<a=x >>= y </a>
+<a=x >>>= y </a>
+<a=x -= y a/>
+<a=x /= y a/>
+<a=x *= y a/>
+<a=x **= y a/>
+<a=x %= y a/>
+<a=x += y a/>
+<a=x in;/>
+<a=x in y a/>
+<a=x in=y/>
+<a=x in, y/>
+<a=x instanceof y a/>
+<a=x satisfies y a/>
+<a=x ++ + y a/>
+<a=x + ++ y a/>
+<a=typeof ++ y a/>
+<a=typeof y ++ a/>
+<a=x ++ y a/>
+<a=x > y </a>
+<a=x >> y </a>
+<a=x >>> y </a>
+<a=x ( y ) a/>
+<a=x { y } a/>
+<a=x => y a/>
+<a=x => ( y ) a/>
+<a=x => { y } a/>
+<a=( x ) { y } a/>
+<a= (x) => { console.log("y") } a/>
+<a= async x => { console.log("y") } a/>
+<a= function (x) { console.log("y") } a/>
+<a= x => { console.log("y") } a/>
+<a= async function (x) { console.log("y") } a/>
+<a= x / (y[z])/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture attr-regex-character-classes (htmljs target)
+================================================================================
+
+<div pattern=/[abc/] /></div>
+<div pattern=/[a-z/] /></div>
+<div pattern=/[^abc/] /></div>
+<div pattern=/[a\]b/] /></div>
+<div pattern=/[\w\s/] /></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-regexp (htmljs target)
+================================================================================
+
+<input pattern=/\s*?\S+\s*?/ name="test">
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-simple-expression (htmljs target)
+================================================================================
+
+<a a=1/2>test</a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-unenclosed-whitespace (htmljs target)
+================================================================================
+
+<div foo = 1 + 2, bar = x / y></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-unenclosed-whitespace-minus (htmljs target)
+================================================================================
+
+var foo = 5 - data
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-unenclosed-whitespace-multiple-attrs (htmljs target)
+================================================================================
+
+<test a = 123 + 456 b = 789></test>
+<test a = 123 b = 456 + 789></test>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-unenclosed-whitespace-odd (htmljs target)
+================================================================================
+
+<div foo = 1+ 2, bar = x /y></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-value-missing (htmljs target)
+================================================================================
+
+<span class=>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_eq)))
+
+================================================================================
+Fixture attr-value-single-quote-escaped (htmljs target)
+================================================================================
+
+var decade = '1960\'s'
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-value-typeof (htmljs target)
+================================================================================
+
+var test = typeof 'foo' === 'string'
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-value-typeof-comma (htmljs target)
+================================================================================
+
+var foo = typeof 'foo',bar=typeof 'bar'
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-value-typeof-no-space-prefix (htmljs target)
+================================================================================
+
+var isString=typeof 'hello' === 'string'
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-value-void (htmljs target)
+================================================================================
+
+var foo=void false
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture attr-with-right-angle-bracket (htmljs target)
+================================================================================
+
+<a a=1>2>test</a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-with-right-angle-bracket-parens (htmljs target)
+================================================================================
+
+<a a=(1>2)>test</a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture attr-without-delimiters (htmljs target)
+================================================================================
+
+<a data=123"abc"></a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

@@ -1,0 +1,253 @@
+================================================================================
+Grouped concise attributes with multiline body
+================================================================================
+
+a [href="http://www.ebay.com"
+  target="_blank"
+  style="background-color: yellow"
+    class="foo"]
+  -- This is the body of the a tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_group_close))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end)))
+
+================================================================================
+Grouped concise attributes with inner and edge whitespace
+================================================================================
+
+a [ href="http://www.ebay.com"
+  target="_blank"
+  style="background-color: yellow"
+    class="foo" ]
+  -- This is the body of the a tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_group_close))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end)))
+
+================================================================================
+Grouped concise attributes with trailing valueless attr
+================================================================================
+
+a [ href="http://www.ebay.com"
+  target="_blank"
+  style="background-color: yellow"
+    class]
+  -- This is the body of the a tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_group_close))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end)))
+
+================================================================================
+Grouped concise attributes missing closing bracket (htmljs target)
+================================================================================
+
+a [ href=['foo']
+  target="_blank"
+  style="background-color: yellow"
+    class
+  -- This is the body of the a tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (tag_name
+      (tag_name_fragment))
+    (attr_group_open)
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)))
+
+================================================================================
+Grouped concise attributes missing bracket at EOF (htmljs target)
+================================================================================
+
+a [ href=['foo']
+  target="_blank"
+  style="background-color: yellow"
+    class
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (tag_name
+      (tag_name_fragment))
+    (attr_group_open)
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)))
+
+================================================================================
+Grouped concise attributes with bracket value expression
+================================================================================
+
+a [ href=['foo']
+  target="_blank"
+  style="background-color: yellow"
+    class]
+  -- This is the body of the a tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_group_close))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end)))
+
+================================================================================
+Multiple grouped concise attributes split by tag default
+================================================================================
+
+a [ foo=bar ] target="_blank" [
+  style="background-color: yellow"
+    class]
+  -- This is the body of the a tag
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_group_close))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_group
+      (attr_group_open)
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_group_close))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end)))

@@ -1,0 +1,47 @@
+================================================================================
+Fixture parsed-text-placeholder-in-template-literal-string (htmljs target)
+================================================================================
+
+<script>
+    var foo = `Text 1: ${content}`;
+    // ${foo}
+    /*
+        ${bar}
+    */
+</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture parsed-text-style-tag (htmljs target)
+================================================================================
+
+<style>/* block comment within <style> */"string within \"<style>\""'string within \'<style>\''</style>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

@@ -1,0 +1,107 @@
+================================================================================
+Fixture commas-relax (htmljs target)
+================================================================================
+
+static const x = {
+  hello: true
+};
+
+import mod, { b as bar } from "./bar"
+export interface Input
+  extends Pick<StarRatingInput, "value" | "a11y-text">,
+    Link,
+    BaseInput {
+  reviewCount: number;
+}
+
+export interface Input {
+  foo: string;
+}
+$ const bar = "bar"
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (statement_expr)
+    (concise_open_tag_end)
+    (element_end))
+  (scriptlet
+    (scriptlet_start_concise)
+    (scriptlet_expr)))
+
+================================================================================
+Fixture commas-require-all-attrs-first (htmljs target)
+================================================================================
+
+<foo a="1", b="2" c="3" />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture commas-require-all-attrs-last (htmljs target)
+================================================================================
+
+<foo a="1" b="2", c="3" />
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))

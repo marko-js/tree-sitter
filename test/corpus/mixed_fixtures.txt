@@ -1,0 +1,378 @@
+================================================================================
+Fixture mixed (htmljs target)
+================================================================================
+
+var colors=['red', 'green', 'blue']
+<div>
+    <span class="foo">
+        Hello ${data.name}!
+        </span>
+</div> <b>This is after the span</b>
+p class="foo"
+    <span>Test</span>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end)
+      (text)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (text)
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (element_end)))
+
+================================================================================
+Fixture mixed-bad-indentation (htmljs target)
+================================================================================
+
+p
+    <b>Hello</b>
+        BAD
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (MISSING element_end)))
+
+================================================================================
+Fixture mixed-block-root (htmljs target)
+================================================================================
+
+---
+1
+<div>
+    2
+</div>
+3
+<div>
+    4
+</div>
+5
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)))
+
+================================================================================
+Fixture mixed-cdata (htmljs target)
+================================================================================
+
+p class="foo"
+    <![CDATA[Hello World]]> This is after CDATA
+div class="bar" -- <![CDATA[Hello World]]>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (cdata)
+    (text)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (html_block
+      (cdata))
+    (element_end)))
+
+================================================================================
+Fixture mixed-comment (htmljs target)
+================================================================================
+
+p class="foo"
+    <!--
+    A multiline HTML comment
+    should be okay
+    -->
+div class="bar" -- <!-- test -->
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (html_comment)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (html_block
+      (html_comment))
+    (element_end)))
+
+================================================================================
+Fixture mixed-invalid (htmljs target)
+================================================================================
+
+var colors=['red', 'green', 'blue']
+<div>
+    <span class="foo">
+        Hello ${data.name}!
+        </span>
+</div> <b>This is not
+    allowed</b>
+p class="foo"
+    <span>Test</span>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end)
+      (text)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (text)
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (element_end)))
+
+================================================================================
+Fixture mixed-open-tag-only (htmljs target)
+================================================================================
+
+var colors=['red', 'green', 'blue']
+<img src="marko.png">
+img src="marko2.png"
+div class="foo"
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
