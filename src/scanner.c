@@ -1017,6 +1017,12 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
         es_next(es);
         break;
       case '{':
+        if (e->in_type && !e->force_type) {
+          int64_t prev_pos = look_behind_while_ws(es, (int64_t)s->buf_len - 1);
+          if (look_behind_for_operator(es, e, prev_pos) == -1) {
+            e->in_type = false;
+          }
+        }
         if (e->group_len >= sizeof(e->group)) return false;
         e->group[e->group_len++] = '}';
         es_next(es);
