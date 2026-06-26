@@ -1248,14 +1248,53 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
 static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
                                TSSymbol *result);
 
+static inline void skip_or_peek(Scanner *s, TSLexer *lexer, bool consume) {
+  if (consume) skipc(s, lexer);
+  else lexer->advance(lexer, false);
+}
+
+// Skip whitespace and `//`/`/* */` comments, returning true if a `,` follows.
+// `consume` skips them as trivia, otherwise it is raw lookahead beyond the
+// committed token end. Mirrors the concise-mode eol scan in OPEN_TAG.
+static bool scan_line_attr_trivia(Scanner *s, TSLexer *lexer, bool consume) {
+  for (;;) {
+    if (at_eof(lexer)) return false;
+    int32_t c = lexer->lookahead;
+    if (is_ws(c)) {
+      skip_or_peek(s, lexer, consume);
+    } else if (c == '/') {
+      skip_or_peek(s, lexer, consume);
+      if (lexer->lookahead == '/') {
+        // line comment
+        skip_or_peek(s, lexer, consume);
+        while (!at_eof(lexer) && !is_line(lexer->lookahead))
+          skip_or_peek(s, lexer, consume);
+      } else if (lexer->lookahead == '*') {
+        // block comment
+        int32_t prev = 0;
+        skip_or_peek(s, lexer, consume);
+        while (!at_eof(lexer) && !(prev == '*' && lexer->lookahead == '/')) {
+          prev = lexer->lookahead;
+          skip_or_peek(s, lexer, consume);
+        }
+        if (at_eof(lexer)) return false;
+        skip_or_peek(s, lexer, consume);
+      } else {
+        return false;
+      }
+    } else {
+      break;
+    }
+  }
+  return lexer->lookahead == ',';
+}
+
 // After most tokens inside a concise open tag, look ahead to see whether a
-// `,` follows (over any whitespace, including newlines): if so the open tag
-// continues on the next line (consumeWhitespaceIfBefore(",")).
+// `,` follows (over whitespace and comments): if so the open tag continues on
+// the next line with another line attribute.
 static void concise_tag_epilogue(Scanner *s, TSLexer *lexer) {
   if (!s->tag_open || !is_concise(s) || s->in_attr_group) return;
-  // raw lookahead beyond the committed token end
-  while (!at_eof(lexer) && is_ws(lexer->lookahead)) lexer->advance(lexer, false);
-  s->tag_comma_continue = !at_eof(lexer) && lexer->lookahead == ',';
+  s->tag_comma_continue = scan_line_attr_trivia(s, lexer, false);
 }
 
 // --------------------------------------------------------------------------
@@ -2952,9 +2991,8 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
         continue;
       }
       if (s->tag_comma_continue) {
-        // consumeWhitespaceIfBefore(","): skip to and through the comma.
-        while (!at_eof(lexer) && is_ws(lexer->lookahead)) skipc(s, lexer);
-        if (!at_eof(lexer) && lexer->lookahead == ',') skipc(s, lexer);
+        // comma continues the open tag with another line attribute
+        if (scan_line_attr_trivia(s, lexer, true)) skipc(s, lexer);
         while (!at_eof(lexer) && is_ws(lexer->lookahead)) skipc(s, lexer);
         s->tag_comma_continue = 0;
         continue;
