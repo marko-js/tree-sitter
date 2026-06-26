@@ -38,6 +38,8 @@
     "node-gyp-build": "^4.8.4"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
     "@types/degit": "^2.8.6",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.16",
@@ -61,12 +63,16 @@
   },
   "scripts": {
     "build": "tree-sitter generate && node-gyp rebuild",
+    "change": "changeset add",
     "generate": "tree-sitter generate",
     "install": "node-gyp-build",
+    "release:publish": "changeset publish",
+    "release:tag": "changeset tag",
     "test": "mocha \"./__tests__/*.test.mts\"",
     "prebuild": "prebuildify --napi --strip",
     "build:wasm": "tree-sitter build --wasm -o tree-sitter-marko.wasm",
-    "test:wasm": "tsx tools/check-wasm.mts"
+    "test:wasm": "tsx tools/check-wasm.mts",
+    "version": "changeset version && node tools/sync-tree-sitter-version.mjs && npm install --package-lock-only"
   },
   "tree-sitter": [
     {

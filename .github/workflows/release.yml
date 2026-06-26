@@ -1,22 +1,60 @@
 name: Release
 
-# Publishes @marko/tree-sitter to npm when a v* tag is pushed, via npm's
-# trusted publishing (OIDC) — no NPM_TOKEN needed. Configure the trusted
-# publisher for @marko/tree-sitter at npmjs.com (package Settings ->
-# "Trusted Publisher") to point at this repo and this workflow file
-# (release.yml). The package ships prebuilt native bindings for every
-# supported platform plus the wasm build, so consumers never need a C
+# Changesets-driven release for @marko/tree-sitter.
+#
+# Every push to main runs the `release` job (changesets/action):
+#   - if .changeset/*.md files are pending, it opens/updates a "[ci] release"
+#     PR that runs `npm run version` (bumps package.json + tree-sitter.json,
+#     writes CHANGELOG.md, consumes the changesets);
+#   - when that PR is merged (no changesets left), it runs the publish command
+#     `npm run release:tag`, which tags the release and sets the action's
+#     `published` output to true.
+#
+# The prebuild/wasm/publish jobs are gated on `published`, so they only run on
+# an actual release. They build the native prebuilds for every supported
+# platform plus the wasm build and then publish, so consumers never need a C
 # toolchain.
+#
+# Publishing uses npm trusted publishing (OIDC) — no NPM_TOKEN. Configure the
+# trusted publisher for @marko/tree-sitter at npmjs.com (package Settings ->
+# "Trusted Publisher") to point at this repo and this workflow file
+# (release.yml). The "[ci] release" PR also requires "Allow GitHub Actions to
+# create and approve pull requests" under Settings -> Actions -> General.
 on:
   push:
-    tags: ["v*"]
+    branches: [main]
 
 permissions:
-  contents: read
-  id-token: write # npm provenance
+  contents: write # changesets opens the version PR and pushes the tag
+  pull-requests: write # changesets opens the version PR
+  id-token: write # npm provenance (OIDC)
 
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: npm install
+      - id: changesets
+        uses: changesets/action@v1
+        with:
+          version: npm run version
+          publish: npm run release:tag
+          commit: "[ci] release"
+          title: "[ci] release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   prebuild:
+    needs: release
+    if: needs.release.outputs.published == 'true'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -52,6 +90,8 @@ jobs:
           path: prebuilds/**
 
   wasm:
+    needs: release
+    if: needs.release.outputs.published == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -68,7 +108,8 @@ jobs:
           path: tree-sitter-marko.wasm
 
   publish:
-    needs: [prebuild, wasm]
+    needs: [release, prebuild, wasm]
+    if: needs.release.outputs.published == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -96,6 +137,10 @@ jobs:
         run: |
           ls -R prebuilds
           ls -la tree-sitter-marko.wasm
-      # Authenticated via npm trusted publishing (OIDC); provenance is
-      # generated automatically. No token required.
-      - run: npm publish --provenance
+      # `changeset publish` only publishes versions not already on the registry,
+      # so this is a no-op unless the version actually changed. Authenticated via
+      # npm trusted publishing (OIDC); provenance is enabled via the env var. No
+      # token required.
+      - run: npm run release:publish
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
