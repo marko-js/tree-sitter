@@ -623,6 +623,7 @@ static int64_t look_behind_for_operator(EStream *es, ExprState *e,
     }
 
     default: {
+      if (code < 'a' || code > 'z') return -1;
       const char *const *keywords =
           e->in_type ? TS_UNARY_KEYWORDS : UNARY_KEYWORDS;
       for (int i = 0; keywords[i]; i++) {
@@ -659,6 +660,7 @@ static int64_t look_ahead_for_operator(EStream *es, ExprState *e, uint32_t k) {
     }
 
     default: {
+      if (c < 'a' || c > 'z') return -1;
       for (int i = 0; BINARY_KEYWORDS[i]; i++) {
         const char *kw = BINARY_KEYWORDS[i];
         size_t len = strlen(kw);
@@ -877,6 +879,11 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
       if (s->buf_len == before) {
         for (uint32_t i = 0; i < len; i++) es_next(es);
       }
+      continue;
+    }
+
+    if (is_word_code(code)) {
+      es_next(es);
       continue;
     }
 
