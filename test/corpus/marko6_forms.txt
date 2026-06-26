@@ -1,0 +1,73 @@
+================================================================================
+Marko 6 let and const forms
+================================================================================
+
+<let/open:=input.open>
+<let/interacted=false>
+
+<const/{
+  a11yText = "accordion",
+  details,
+}=input>
+
+<const/{
+  class: inputClass,
+  size,
+  details,
+  a11yText = "accordion",
+  open: inputOpen,
+  openChange,
+  ...htmlInput
+}=input>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_bound_value
+      (attr_bound_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (element_end)))

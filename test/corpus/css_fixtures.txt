@@ -1,0 +1,41 @@
+================================================================================
+Fixture css-calc (htmljs target)
+================================================================================
+
+﻿style {
+    .example {
+        margin-left: calc((-100% / 12 - 200px) / 2);
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture css-grid (htmljs target)
+================================================================================
+
+﻿style.scss {
+  .foo {
+    grid: "left right" / 3fr 7fr;
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))

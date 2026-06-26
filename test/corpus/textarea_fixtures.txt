@@ -1,0 +1,22 @@
+================================================================================
+Fixture textarea (htmljs target)
+================================================================================
+
+textarea -- Hello
+p
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))

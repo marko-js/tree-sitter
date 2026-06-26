@@ -1,0 +1,202 @@
+================================================================================
+Whitespace around equals
+================================================================================
+
+<div foo = bar></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Valueless self-closed attribute
+================================================================================
+
+<var foo/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Tag arguments plus attribute arguments
+================================================================================
+
+<for(var i = 0; i < 10; i++) if(x > y)></for>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (attr_name)
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Argument and parameters variants
+================================================================================
+
+<${x}(y)/>
+<${x}|y|/>
+<tag.x(y)/>
+<tag.x|y|/>
+<tag#x(y)/>
+<tag#x|y|/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)))
+      (params_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)))
+      (params_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_id
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_id
+      (tag_name_fragment))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)))
+      (params_close))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Text after concise tag fence
+================================================================================
+
+span -- Hello World
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end)))
+
+================================================================================
+HTML comment in tag body
+================================================================================
+
+<a><!--<b></b>--></a>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (html_comment)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

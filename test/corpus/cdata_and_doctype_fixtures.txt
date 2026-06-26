@@ -1,0 +1,76 @@
+================================================================================
+CDATA top-level block
+================================================================================
+
+<![CDATA[[if lt IE 9]><div><![endif]]]>
+
+--------------------------------------------------------------------------------
+
+(document
+  (cdata))
+
+================================================================================
+CDATA inside normal element text flow
+================================================================================
+
+<div>
+    BEFORE<![CDATA[<within><!-- just text -->]]>AFTER
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (cdata)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+CDATA nested under element indentation
+================================================================================
+
+test
+    <foo>
+    <![CDATA[[if lt IE 9]><div><![endif]]]>
+    </foo>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (cdata)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (element_end)))
+
+================================================================================
+EOF doctype without closing bracket
+================================================================================
+
+<!DOCTYPE html PUBLIC
+
+--------------------------------------------------------------------------------
+
+(document)

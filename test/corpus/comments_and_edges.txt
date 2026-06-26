@@ -1,0 +1,128 @@
+================================================================================
+HTML comment and extension variants
+================================================================================
+
+<!-- hello -->
+style.mjs { const a = 1 }
+style.mts { const b = 2 }
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_comment)
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Preserved html-comment tag
+================================================================================
+
+<html-comment><!-- keep me --></html-comment>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Empty closing tags
+================================================================================
+
+<div>
+    Hello World
+    <span>
+        Hello Universe
+    </>
+</>
+
+<ul.features>
+    <li for(feature in [])>
+        ${feature}
+    </li>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (args
+        (args_open)
+        (args_expr)
+        (args_close))
+      (open_tag_end)
+      (text)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

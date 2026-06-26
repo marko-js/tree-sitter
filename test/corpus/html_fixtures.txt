@@ -1,0 +1,92 @@
+================================================================================
+Fixture html-block-after-tag (htmljs target)
+================================================================================
+
+span -- Hello <b>test</b>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (element
+        (open_tag_start)
+        (tag_name
+          (tag_name_fragment))
+        (open_tag_end)
+        (text)
+        (close_tag
+          (close_tag_start)
+          (close_tag_name)
+          (close_tag_end))
+        (element_end)))
+    (element_end)))
+
+================================================================================
+Fixture html-comment-tag (htmljs target)
+================================================================================
+
+<div>
+  <!--123-->
+  <html-comment>abc</html-comment>
+  <!--[if lt IE 9]><script src="..."></script><![endif]-->
+  <html-comment>[if lt IE 9]><script src="..."></script><![endif]</html-comment>
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (html_comment)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (html_comment)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture html-comments-ignore-placeholders (htmljs target)
+================================================================================
+
+<!-- Copyright ${date} -->
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_comment))

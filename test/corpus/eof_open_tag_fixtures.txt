@@ -1,0 +1,59 @@
+================================================================================
+EOF after tag start
+================================================================================
+
+<a><b
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (open_tag_start)
+    (tag_name_fragment)))
+
+================================================================================
+EOF after attribute name
+================================================================================
+
+<a><b selected
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)))
+
+================================================================================
+EOF after unquoted attribute value
+================================================================================
+
+<a><b selected something test=123
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_name)
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))))

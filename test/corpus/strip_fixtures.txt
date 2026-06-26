@@ -1,0 +1,18 @@
+================================================================================
+Fixture strip-bom (htmljs target)
+================================================================================
+
+﻿<lasso-page package-path="./browser.json"/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (concise_open_tag_end)
+    (element_end)))

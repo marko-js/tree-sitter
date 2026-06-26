@@ -1,0 +1,233 @@
+================================================================================
+Fixture eof-attr-argument (htmljs target)
+================================================================================
+
+<div if(a==b
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (args_open)))
+
+================================================================================
+Fixture eof-attr-value-js-comment-comment (htmljs target)
+================================================================================
+
+<a><b selected something test=/*
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_name)
+    (attr_name)
+    (attr_eq)))
+
+================================================================================
+Fixture eof-attr-value-js-comment-comment-concise (htmljs target)
+================================================================================
+
+b selected something test=/*
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_name)
+    (attr_name)
+    (attr_eq)))
+
+================================================================================
+Fixture eof-attr-value-string (htmljs target)
+================================================================================
+
+<a href="
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_eq)))
+
+================================================================================
+Fixture eof-placeholder-body-escaped (htmljs target)
+================================================================================
+
+<div>Hello ${abc</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder_start))
+  (text))
+
+================================================================================
+Fixture eof-placeholder-body-non-escaped (htmljs target)
+================================================================================
+
+<div>
+    Hello
+    $!{abc
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder_start_raw))
+  (text))
+
+================================================================================
+Fixture eof-placeholder-concise (htmljs target)
+================================================================================
+
+div
+    -- $!{abc
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (placeholder_start_raw))
+  (text))
+
+================================================================================
+Fixture eof-placeholder-script-body-escaped (htmljs target)
+================================================================================
+
+<script>Hello ${abc
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder_start))
+  (text))
+
+================================================================================
+Fixture eof-placeholder-script-body-non-escaped (htmljs target)
+================================================================================
+
+<script>Hello $!{abc
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder_start_raw))
+  (text))
+
+================================================================================
+Fixture eof-placeholder-string (htmljs target)
+================================================================================
+
+<div>Hello ${(x</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder_start))
+  (text))
+
+================================================================================
+Fixture eof-script-body (htmljs target)
+================================================================================
+
+<script a=b>// line comment within <script>
+/* block comment within <script> */"string within \"<script>\""'string within \'<script>\''
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (MISSING element_end)))
+
+================================================================================
+Fixture eof-style (htmljs target)
+================================================================================
+
+<style a=b>/* block comment within <style> */"string within \"<style>\""'string within \'<style>\''
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (MISSING element_end)))
+
+================================================================================
+Fixture eof-xml-declaration (htmljs target)
+================================================================================
+
+<?xml version="1.0"
+
+--------------------------------------------------------------------------------
+
+(document)

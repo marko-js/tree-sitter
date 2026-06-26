@@ -1,0 +1,62 @@
+================================================================================
+Script concise fenced body and line continuation
+================================================================================
+
+script
+    ---
+    This is text
+    within the </script> block
+    ---
+    -- This should be okay too
+div
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text))
+    (html_block
+      (text))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Script concise forms and script src attr (htmljs target)
+================================================================================
+
+head
+    script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"
+    lasso-head
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (concise_open_tag_end)
+      (element_end))
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (element_end))
+    (element_end)))

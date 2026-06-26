@@ -1,0 +1,674 @@
+================================================================================
+Fixture placeholder-attr-string-value (htmljs target)
+================================================================================
+
+<custom name="Hello ${name}!">TEST</custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-attr-string-value-parens (htmljs target)
+================================================================================
+
+<custom name=("Hello ${name}!")>TEST</custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-attr-within-string-complex (htmljs target)
+================================================================================
+
+<custom data=("Hello $!{name}!" + " This is a test.")></custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-attr-within-string-simple (htmljs target)
+================================================================================
+
+<custom data="${abc}"></custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-attr-wrapped (htmljs target)
+================================================================================
+
+<custom data="${abc}"></custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-backslash (htmljs target)
+================================================================================
+
+<foo a="\${test" b="\\${test}" c="\$!{test" d="\\$!{test}">
+
+</foo>
+<a>
+    \${test
+</a>
+<b>
+    \\${test}
+</b>
+<c>
+    \$!{test
+</c>
+<d>
+    \\$!{test}
+</d>
+
+<e>\${</e>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (escape)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (escape)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (escape)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (escape)
+    (placeholder
+      (placeholder_start_raw)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (escape)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-body-multi-line-js-comment (htmljs target)
+================================================================================
+
+<script>/* Copyright $!{date} */</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-body-single-line-js-comment (htmljs target)
+================================================================================
+
+<script>// Copyright ${date}
+</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-body-text (htmljs target)
+================================================================================
+
+<div>Hello ${xyz}!</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-escape (htmljs target)
+================================================================================
+
+<custom name="Hello ${name}!">
+    Hello ${name}!
+</custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-tag-name-concise (htmljs target)
+================================================================================
+
+${test} foo=123
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture placeholder-tag-name-html (htmljs target)
+================================================================================
+
+<${test} foo=123/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture placeholder-unnamed-attr (htmljs target)
+================================================================================
+
+<div class="foo" ...myCustomAttrs foo="bar"></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_spread
+      (attr_value_expr))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-unnamed-attr-escaped (htmljs target)
+================================================================================
+
+<div class="foo" \${myCustomAttrs}></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-unnamed-attr-escaped-escaped (htmljs target)
+================================================================================
+
+<div class="foo" \\${myCustomAttrs}></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-unnamed-attr-last (htmljs target)
+================================================================================
+
+<div class="foo" ...myCustomAttrs></div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_spread
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-unnamed-attr-last-concise (htmljs target)
+================================================================================
+
+div class="foo" ...myCustomAttrs
+    span.bar
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_spread
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (shorthand_class
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (element_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-unnamed-attr-last-self-closed (htmljs target)
+================================================================================
+
+<div class="foo" ...myCustomAttrs/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_spread
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture placeholder-within-placeholder (htmljs target)
+================================================================================
+
+-- ${"Hello ${data.name}!"}
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))))
+
+================================================================================
+Fixture placeholder-within-placeholder-escaping (htmljs target)
+================================================================================
+
+-- $!{"Hello ${data.name}!"}
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (placeholder
+      (placeholder_start_raw)
+      (placeholder_expr)
+      (placeholder_end))))
+
+================================================================================
+Fixture placeholder-within-script-tag (htmljs target)
+================================================================================
+
+<script>Hello ${xyz}!</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-within-script-within-string (htmljs target)
+================================================================================
+
+<script>alert("Hello ${xyz}!")</script>
+<script>alert('${xyz}')</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture placeholder-within-string-newlines (htmljs target)
+================================================================================
+
+<custom data="${
+abc
+}"></custom>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

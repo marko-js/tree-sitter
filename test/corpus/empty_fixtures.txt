@@ -1,0 +1,86 @@
+================================================================================
+Fixture empty-closing-tag (htmljs target)
+================================================================================
+
+<div>
+    Hello World
+    <span>
+        Hello Universe
+    </>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture empty-closing-tag2 (htmljs target)
+================================================================================
+
+<ul.features>
+    <li for(feature in [])>
+        ${feature}
+    </li>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (args
+        (args_open)
+        (args_expr)
+        (args_close))
+      (open_tag_end)
+      (text)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

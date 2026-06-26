@@ -1,0 +1,505 @@
+================================================================================
+Shorthand opening tag with explicit mismatched close
+================================================================================
+
+<#foo>
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Shorthand opening tag with empty close
+================================================================================
+
+<#foo>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture shorthand-class-dynamic (htmljs target)
+================================================================================
+
+span.${data.foo}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-class-dynamic-literal-prefix (htmljs target)
+================================================================================
+
+.bar${data.foo}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name)
+    (shorthand_class
+      (tag_name_fragment)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-class-dynamic-literal-suffix (htmljs target)
+================================================================================
+
+.${data.foo}-bar
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name)
+    (shorthand_class
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-class-self-closed (htmljs target)
+================================================================================
+
+<span>
+    <div.color/>
+</span>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (shorthand_class
+        (tag_name_fragment))
+      (open_tag_end_self)
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture shorthand-closing-html (htmljs target)
+================================================================================
+
+<li>
+    <a.nav-link class=(id === currentPage && 'active') href=href>
+        ${title}
+    </a>
+</li>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (shorthand_class
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end)
+      (text)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture shorthand-div-id-class (htmljs target)
+================================================================================
+
+div#foo.bar
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_id
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-div-id-class-multiple (htmljs target)
+================================================================================
+
+div#foo.bar.baz
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_id
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-id (htmljs target)
+================================================================================
+
+#foo
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-id-class (htmljs target)
+================================================================================
+
+#foo.bar
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-id-dup (htmljs target)
+================================================================================
+
+#foo#bar
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))))
+
+================================================================================
+Fixture shorthand-id-dynamic (htmljs target)
+================================================================================
+
+span#${data.foo}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_id
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-id-dynamic-literal-prefix (htmljs target)
+================================================================================
+
+#bar${data.foo}
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-id-dynamic-literal-suffix (htmljs target)
+================================================================================
+
+#${data.foo}-bar
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name)
+    (shorthand_id
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture shorthand-id-self-closed (htmljs target)
+================================================================================
+
+<span>
+    <div#foo/>
+</span>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (shorthand_id
+        (tag_name_fragment))
+      (open_tag_end_self)
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture shorthand-mixed (htmljs target)
+================================================================================
+
+<#foo>Hello</>
+<#foo.bar name="Frank"></>
+<.bar.baz></.bar.baz>
+<div.foo></>
+<span.foo></span.foo>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name)
+    (shorthand_class
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture shorthand-mixed-concise (htmljs target)
+================================================================================
+
+#foo -- Hello
+#foo.bar name="Frank"
+.bar.baz
+div.foo
+span.foo
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (element_end))
+  (element
+    (tag_name)
+    (shorthand_id
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name)
+    (shorthand_class
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))

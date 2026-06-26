@@ -1,0 +1,62 @@
+================================================================================
+Fixture single-line-text-block (htmljs target)
+================================================================================
+
+-- Line 1
+-- Line 2
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text))
+  (html_block
+    (text)))
+
+================================================================================
+Fixture single-line-text-block-nested (htmljs target)
+================================================================================
+
+p
+    -- Line 1
+    -- Line 2
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (html_block
+      (text))
+    (element_end)))
+
+================================================================================
+Fixture single-line-text-block-sibling (htmljs target)
+================================================================================
+
+p
+    -- Paragraph: Line 1
+    -- Paragraph: Line 2
+-- Root: Line 1
+-- Root: Line 2
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text))
+    (html_block
+      (text))
+    (element_end))
+  (html_block
+    (text))
+  (html_block
+    (text)))

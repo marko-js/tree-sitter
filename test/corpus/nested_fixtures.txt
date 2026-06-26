@@ -1,0 +1,149 @@
+================================================================================
+Fixture nested-pyramid (htmljs target)
+================================================================================
+
+a
+    b
+        c
+        c2
+    b2
+a2
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (element_end))
+      (element
+        (tag_name
+          (tag_name_fragment))
+        (concise_open_tag_end)
+        (element_end))
+      (element_end))
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (element_end))
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture nested-siblings (htmljs target)
+================================================================================
+
+div class="foo"
+    span class="bar"
+    span class="baz"
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (concise_open_tag_end)
+      (element_end))
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (concise_open_tag_end)
+      (element_end))
+    (element_end)))
+
+================================================================================
+Fixture nested-tags (htmljs target)
+================================================================================
+
+div class="foo"
+    span class="bar"
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (concise_open_tag_end)
+      (element_end))
+    (element_end)))
+
+================================================================================
+Fixture nested-text (htmljs target)
+================================================================================
+
+div
+    ---
+    This is
+    multi-line text
+    ---
+    span -- This is body text of span
+        -- This is also body text of span
+    -- Hello Universe
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text))
+    (element
+      (tag_name
+        (tag_name_fragment))
+      (concise_open_tag_end)
+      (html_block
+        (text))
+      (html_block
+        (text))
+      (element_end))
+    (html_block
+      (text))
+    (element_end)))

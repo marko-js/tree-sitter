@@ -1,0 +1,247 @@
+================================================================================
+Fixture script (htmljs target)
+================================================================================
+
+<script>// line comment within <script>
+/* block comment within <script> */"string within \"<script>\""'string within \'<script>\''</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture script-concise-invalid-nested-tag (htmljs target)
+================================================================================
+
+script
+    p - This is not allowed
+div
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (concise_open_tag_end)
+    (MISSING element_end)))
+
+================================================================================
+Fixture script-escaped-placeholder (htmljs target)
+================================================================================
+
+<script>
+\${test}
+\\${test}
+</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (escape)
+    (text)
+    (escape)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture script-self-closed (htmljs target)
+================================================================================
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"/>
+    <lasso-head />
+</head>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (attr_name)
+      (attr_value
+        (attr_eq)
+        (attr_value_expr))
+      (open_tag_end_self)
+      (element_end))
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end_self)
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture script-single-line-comment (htmljs target)
+================================================================================
+
+<script>// this is a comment</script>
+
+<div>
+  <script>// this is a comment</script>
+  <span>hi</span>
+</div>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture script-tag-entities (htmljs target)
+================================================================================
+
+<script>console.log('<div>Hello ${input.name}</div>');</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture script-with-strings (htmljs target)
+================================================================================
+
+<script>
+  "this is a ${test}"
+  "this is a \${test}"
+  "/*"
+  "//"
+  'this is a ${test}'
+  'this is a \${test}'
+  '/*'
+  '//'
+  `this is a ${test}`
+  `this is a \${test}`
+  `/*`
+  `//`
+</script>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (escape)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (escape)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

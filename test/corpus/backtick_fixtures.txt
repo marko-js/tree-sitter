@@ -1,0 +1,66 @@
+================================================================================
+Fixture backtick-string-eof (htmljs target)
+================================================================================
+
+<hello message=`Hello
+    ${foo}!></hello>
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_eq)))
+
+================================================================================
+Fixture backtick-string-nested-with-space (htmljs target)
+================================================================================
+
+<hello message=`${`hi ${name}`}!`></hello>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture backtick-string-placeholder-newline (htmljs target)
+================================================================================
+
+<hello message=`${
+    foo
+}!`></hello>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

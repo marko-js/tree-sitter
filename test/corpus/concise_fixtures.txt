@@ -1,0 +1,106 @@
+================================================================================
+Fixture concise-block-whitespace-leading (htmljs target)
+================================================================================
+
+---
+  A ${'B'} C
+---
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)))
+
+================================================================================
+Fixture concise-contentplaceholder-html-start (htmljs target)
+================================================================================
+
+-- ${data.name} some html - <b>bold</b>
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (element
+      (open_tag_start)
+      (tag_name
+        (tag_name_fragment))
+      (open_tag_end)
+      (text)
+      (close_tag
+        (close_tag_start)
+        (close_tag_name)
+        (close_tag_end))
+      (element_end))))
+
+================================================================================
+Fixture concise-contentplaceholder-start (htmljs target)
+================================================================================
+
+-- ${data.name}
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))))
+
+================================================================================
+Fixture concise-hyphen-after-tag-name (htmljs target)
+================================================================================
+
+div - Hello World
+
+--------------------------------------------------------------------------------
+
+(document
+  (ERROR
+    (tag_name_fragment)))
+
+================================================================================
+Fixture concise-line-whitespace-ending (htmljs target)
+================================================================================
+
+-- ${value}
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))))
+
+================================================================================
+Fixture concise-multiline-content (htmljs target)
+================================================================================
+
+--
+hi
+--
+
+--
+foo
+
+--------------------------------------------------------------------------------
+
+(document
+  (html_block
+    (text))
+  (html_block
+    (text)))

@@ -1,0 +1,1127 @@
+================================================================================
+Fixture tag-name-expression-literal-prefix (htmljs target)
+================================================================================
+
+<foo-${bar}>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-name-expression-literal-prefix-attrs (htmljs target)
+================================================================================
+
+<foo-${bar} hello="world">
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-name-expression-literal-prefix-suffix (htmljs target)
+================================================================================
+
+<foo-${bar}-baz>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment)
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-name-expression-literal-suffix (htmljs target)
+================================================================================
+
+<${foo}-bar>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end))
+      (tag_name_fragment))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-name-expression-shorthand-id (htmljs target)
+================================================================================
+
+<${myTagName}#foo></>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (shorthand_id
+      (tag_name_fragment))
+    (open_tag_end)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-name-expression-simple (htmljs target)
+================================================================================
+
+<${foo}>
+</${foo}>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-name-expression-simple-empty-close (htmljs target)
+================================================================================
+
+<${foo}>
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-params-with-type-parameters (htmljs target)
+================================================================================
+
+<foo<A>|data: A|>
+  hi
+</>
+
+<foo<A> |data: A|>
+  hi
+</>
+
+<foo <A>|data: A|>
+  hi
+</>
+
+<foo <A> |data: A|>
+  hi
+</>
+
+<foo<A, B = string>|data: A & B|>
+  hi
+</>
+
+<foo<A, B = string> |data: A & B|>
+  hi
+</>
+
+<foo <A, B = string>|data: A & B|>
+  hi
+</>
+
+<foo <A, B = string> |data: A & B|>
+  hi
+</>
+
+<foo()<A> |data: A|>
+  hi
+</>
+
+<foo/x<A> |data: A|>
+  hi
+</>
+
+<foo<string><A> |data: A|>
+  hi
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (args
+      (args_open)
+      (args_close))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)
+          (param_type)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-type-argument-arrow-function (htmljs target)
+================================================================================
+
+<foo<{ bar: () => void }>/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture tag-var-before-concise-text (htmljs target)
+================================================================================
+
+style/style --
+  header {
+    color: green
+  }
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (concise_open_tag_end)
+    (html_block
+      (text)
+      (text)
+      (text)
+      (text)
+      (text))
+    (element_end)))
+
+================================================================================
+Fixture tag-var-declaration (htmljs target)
+================================================================================
+
+<${foo}/someVar>
+</>
+
+<let/foo/>
+<let/foo=1/>
+<let/foo = 1/>
+<let/foo + 1/>
+<let/foo:string/>
+<let/foo : string/>
+<let/foo: typeof bar extends y ? a : b x=2/>
+<let/{ x, y }/>
+
+<const/fn:any() {
+  console.log("hi");
+}/>
+
+<button/loginButton>
+  login
+</>
+<button/loginButton >
+  login
+</>
+
+<div/ref/>
+<div/ref />
+
+<div#ab.cd/ref/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (placeholder
+        (placeholder_start)
+        (placeholder_expr)
+        (placeholder_end)))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (attr_name)
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (args
+      (args_open)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (shorthand_id
+      (tag_name_fragment))
+    (shorthand_class
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (open_tag_end_self)
+    (element_end)))
+
+================================================================================
+Fixture tag-var-type-with-parens (htmljs target)
+================================================================================
+
+let/a:(B | C) = D
+
+let/a: (B | C) = D
+
+let/a : (B | C) = D
+
+let/a :(B | C) = D
+
+let/a: B & (C | D) = D
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end))
+  (element
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)
+        (var_type)))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (concise_open_tag_end)
+    (element_end)))
+
+================================================================================
+Fixture tag-var-with-params (htmljs target)
+================================================================================
+
+<foo/var|param|>
+  Hello ${param}
+</foo>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (tag_var
+      (tag_var_expr
+        (var_pattern)))
+    (params
+      (params_open)
+      (params_expr
+        (param
+          (param_pattern)))
+      (params_close))
+    (open_tag_end)
+    (text)
+    (placeholder
+      (placeholder_start)
+      (placeholder_expr)
+      (placeholder_end))
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))
+
+================================================================================
+Fixture tag-with-type-arguments (htmljs target)
+================================================================================
+
+<foo<A>>
+  hi
+</>
+
+<foo<A> >
+  hi
+</>
+
+<foo<A, B = string>>
+  hi
+</>
+
+<foo<A, B = string> >
+  hi
+</>
+
+<foo<A>(bar)>
+  hi
+</>
+
+<foo<A> (bar)>
+  hi
+</>
+
+<foo<A, B = string>(bar)>
+  hi
+</>
+
+<foo<A, B = string> (bar)>
+  hi
+</>
+
+
+<foo<A> (bar) {
+
+}>
+  hi
+</>
+
+<foo <A> (bar) {
+
+}>
+  hi
+</>
+
+<foo <A>(bar) {
+
+}>
+  hi
+</>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_args
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (type_params
+      (type_open)
+      (type_expr)
+      (type_close))
+    (args
+      (args_open)
+      (args_expr)
+      (args_close))
+    (method_body
+      (method_body_open)
+      (method_body_expr)
+      (method_body_close))
+    (open_tag_end)
+    (text)
+    (close_tag
+      (close_tag_start)
+      (close_tag_name)
+      (close_tag_end))
+    (element_end)))

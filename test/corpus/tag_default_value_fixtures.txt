@@ -1,0 +1,41 @@
+================================================================================
+Attribute operator spacing in default values (htmljs target)
+================================================================================
+
+<a=x . y a/>
+<a=x && y a/>
+<a=x ? y : z a/>
+
+--------------------------------------------------------------------------------
+
+(document
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end))
+  (element
+    (open_tag_start)
+    (tag_name
+      (tag_name_fragment))
+    (attr_value
+      (attr_eq)
+      (attr_value_expr))
+    (attr_name)
+    (open_tag_end_self)
+    (element_end)))
