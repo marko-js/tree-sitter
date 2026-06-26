@@ -7,14 +7,16 @@
       "title": "Marko",
       "scope": "source.marko",
       "path": ".",
-      "file-types": ["marko"],
+      "file-types": [
+        "marko"
+      ],
       "injection-regex": "^marko$",
       "highlights": "queries/highlights.scm",
       "injections": "queries/injections.scm"
     }
   ],
   "metadata": {
-    "version": "0.1.0",
+    "version": "0.2.0",
     "license": "MIT",
     "description": "Tree-sitter grammar for the Marko templating language",
     "links": {
