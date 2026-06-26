@@ -144,3 +144,42 @@ jobs:
       - run: npm run release:publish
         env:
           NPM_CONFIG_PROVENANCE: "true"
+
+  # Tell the Zed extension (marko-js/zed) to refresh its pinned grammar as soon
+  # as a new version is published, so it always ships the latest grammar. The
+  # zed repo also self-updates on a daily schedule, so this dispatch only makes
+  # the update near-instant and is safe to skip when the token isn't configured.
+  notify-zed:
+    needs: [release, publish]
+    if: needs.release.outputs.published == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve released commit
+        id: rel
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag="$(gh api "repos/${{ github.repository }}/releases/latest" --jq .tag_name)"
+          sha="$(gh api "repos/${{ github.repository }}/commits/${tag}" --jq .sha)"
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+          echo "sha=${sha}" >> "$GITHUB_OUTPUT"
+      - name: Dispatch grammar update to marko-js/zed
+        # ZED_DISPATCH_TOKEN is a fine-grained PAT (or GitHub App token) with
+        # `contents: write` on marko-js/zed; the default GITHUB_TOKEN cannot
+        # dispatch across repositories. When the secret is absent the step is a
+        # no-op so releases never fail because of it.
+        env:
+          GH_TOKEN: ${{ secrets.ZED_DISPATCH_TOKEN }}
+          TAG: ${{ steps.rel.outputs.tag }}
+          SHA: ${{ steps.rel.outputs.sha }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "ZED_DISPATCH_TOKEN not set; skipping (marko-js/zed self-updates on schedule)."
+            exit 0
+          fi
+          gh api repos/marko-js/zed/dispatches \
+            -f event_type=tree-sitter-released \
+            -F "client_payload[tag]=${TAG}" \
+            -F "client_payload[sha]=${SHA}"
