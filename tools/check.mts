@@ -1,6 +1,6 @@
 // Usage:
-//   npx tsx tools/check.mts '<div>hello</div>'   compare an inline source
-//   npx tsx tools/check.mts --fixture attr-complex  compare a fixture
+//   pnpm exec tsx tools/check.mts '<div>hello</div>'   compare an inline source
+//   pnpm exec tsx tools/check.mts --fixture attr-complex  compare a fixture
 import fs from "node:fs";
 import path from "node:path";
 import { compare } from "../__tests__/util/compare.mts";
