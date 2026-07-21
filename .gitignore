@@ -5,3 +5,5 @@ prebuilds
 *.dylib
 *.wasm
 .vscode
+package-lock.json
+yarn.lock

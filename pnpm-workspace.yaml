@@ -1,0 +1,9 @@
+# Dependency build (postinstall/install) scripts pnpm is allowed to run.
+# pnpm blocks dependency build scripts by default; these need theirs:
+#   - tree-sitter: compiles its native node addon (prebuild-install/node-gyp)
+#   - tree-sitter-cli: downloads the platform tree-sitter binary
+#   - esbuild (via tsx): installs its platform binary
+allowBuilds:
+  esbuild: true
+  tree-sitter: true
+  tree-sitter-cli: true

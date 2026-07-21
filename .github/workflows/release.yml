@@ -4,10 +4,10 @@ name: Release
 #
 # Every push to main runs the `release` job (changesets/action):
 #   - if .changeset/*.md files are pending, it opens/updates a "[ci] release"
-#     PR that runs `npm run version` (bumps package.json + tree-sitter.json,
+#     PR that runs `pnpm run version` (bumps package.json + tree-sitter.json,
 #     writes CHANGELOG.md, consumes the changesets);
 #   - when that PR is merged (no changesets left), it runs the publish command
-#     `npm run release:tag`, which tags the release and sets the action's
+#     `pnpm run release:tag`, which tags the release and sets the action's
 #     `published` output to true.
 #
 # The prebuild/wasm/publish jobs are gated on `published`, so they only run on
@@ -38,15 +38,17 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 22
-      - run: npm install
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - id: changesets
         uses: changesets/action@v1
         with:
-          version: npm run version
-          publish: npm run release:tag
+          version: pnpm run version
+          publish: pnpm run release:tag
           commit: "[ci] release"
           title: "[ci] release"
         env:
@@ -72,17 +74,19 @@ jobs:
           ]
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+          cache: pnpm
       # Skip the package's node-gyp-build install script — prebuildify does the
       # real build, so the install-time compile is redundant.
-      - run: npm install --ignore-scripts
-      - run: npm run prebuild
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm run prebuild
       # macOS runners are arm64; cross-build the Intel (x64) prebuild too so we
       # don't need an Intel runner (N-API addons cross-compile cleanly).
       - if: runner.os == 'macOS'
-        run: npm run prebuild -- --arch x64
+        run: pnpm run prebuild --arch x64
       - uses: actions/upload-artifact@v7
         with:
           name: prebuild-${{ matrix.os }}
@@ -95,13 +99,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+          cache: pnpm
       # tree-sitter-cli downloads the wasi-sdk toolchain automatically.
-      - run: npm install
-      - run: npm run build:wasm
-      - run: npm run test:wasm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build:wasm
+      - run: pnpm run test:wasm
       - uses: actions/upload-artifact@v7
         with:
           name: wasm
@@ -113,16 +119,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+          cache: pnpm
           registry-url: https://registry.npmjs.org
       # npm >= 11.5.1 is required for OIDC trusted publishing.
       - run: npm install -g npm@latest
-      - run: npm install
+      - run: pnpm install --frozen-lockfile
       # Refresh generated sources (src/parser.c etc.) so the published tree
       # matches grammar.js exactly.
-      - run: npm run generate
+      - run: pnpm run generate
       # Gather every platform's prebuild back into prebuilds/ and the wasm
       # build to the package root, matching package.json "files".
       - uses: actions/download-artifact@v8
@@ -141,6 +149,6 @@ jobs:
       # so this is a no-op unless the version actually changed. Authenticated via
       # npm trusted publishing (OIDC); provenance is enabled via the env var. No
       # token required.
-      - run: npm run release:publish
+      - run: pnpm run release:publish
         env:
           NPM_CONFIG_PROVENANCE: "true"

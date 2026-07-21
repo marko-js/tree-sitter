@@ -2,7 +2,7 @@
 // node_modules) against htmljs-parser, in a watchdogged worker process so
 // scanner hangs surface as HANG instead of freezing the run.
 //
-// Usage: npx tsx tools/run-corpus.mts [--fail-only] <dir> [<dir> ...]
+// Usage: pnpm exec tsx tools/run-corpus.mts [--fail-only] <dir> [<dir> ...]
 import { spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";

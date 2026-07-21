@@ -40,9 +40,9 @@ parser.setLanguage(Marko);
 Building from a checkout:
 
 ```sh
-npm install
-npm run build        # tree-sitter generate && node-gyp rebuild
-npm run build:wasm   # tree-sitter-marko.wasm (the CLI fetches wasi-sdk itself)
+pnpm install
+pnpm run build        # tree-sitter generate && node-gyp rebuild
+pnpm run build:wasm   # tree-sitter-marko.wasm (the CLI fetches wasi-sdk itself)
 ```
 
 For editors, the grammar ships ready-to-use queries: `queries/highlights.scm`
@@ -61,9 +61,9 @@ in the host tool like any other language.
 From this directory:
 
 ```sh
-npx tree-sitter playground            # interactive tree in the browser
-npx tree-sitter parse file.marko      # print the syntax tree
-npx tree-sitter highlight file.marko  # ANSI highlighting (--html for a page)
+pnpm exec tree-sitter playground            # interactive tree in the browser
+pnpm exec tree-sitter parse file.marko      # print the syntax tree
+pnpm exec tree-sitter highlight file.marko  # ANSI highlighting (--html for a page)
 ```
 
 `highlight` resolves the injected languages through the CLI config: run
@@ -82,7 +82,7 @@ and start treesitter for the filetype:
 ```sh
 # from this directory
 mkdir -p ~/.local/share/nvim/site/parser ~/.local/share/nvim/site/queries
-npx tree-sitter build -o ~/.local/share/nvim/site/parser/marko.so
+pnpm exec tree-sitter build -o ~/.local/share/nvim/site/parser/marko.so
 cp -R queries ~/.local/share/nvim/site/queries/marko
 ```
 
@@ -262,7 +262,7 @@ split without lookahead the scanner doesn't have.
 
 Marko's parser is [htmljs-parser](https://github.com/marko-js/htmljs-parser);
 this grammar's external scanner reimplements its state machine, and the test
-suite (`npm test`, Node 22) asserts the tree reproduces the parser's event
+suite (`pnpm test`, Node 22) asserts the tree reproduces the parser's event
 stream with byte-precise ranges across the parser's full fixture suite, plus
 thousands of templates from the Marko ecosystem during development.
 
