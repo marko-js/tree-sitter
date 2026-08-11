@@ -280,6 +280,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "attr_method_async"
+        },
+        {
+          "type": "SYMBOL",
           "name": "attr_name"
         },
         {
@@ -993,6 +997,10 @@
     {
       "type": "SYMBOL",
       "name": "_attr_group_close"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "attr_method_async"
     },
     {
       "type": "SYMBOL",

@@ -70,6 +70,7 @@ module.exports = grammar({
     $._types_close, // ">"
     $._attr_group_open, // "[" (concise mode)
     $._attr_group_close, // "]"
+    $.attr_method_async, // "async" before a shorthand method
     $.attr_name,
     $.attr_eq, // "="
     $.attr_bound_eq, // ":="
@@ -151,6 +152,7 @@ module.exports = grammar({
         $.type_args,
         $.type_params,
         $.attr_group,
+        $.attr_method_async,
         $.attr_name,
         $.attr_value,
         $.attr_bound_value,

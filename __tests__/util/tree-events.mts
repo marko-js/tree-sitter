@@ -126,6 +126,7 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
     name?: SyntaxNode;
     typeParams?: SyntaxNode;
     args?: SyntaxNode;
+    async?: SyntaxNode;
   }
 
   const innerValue = (node: SyntaxNode, exprType: string): [number, number] => {
@@ -188,9 +189,15 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
         flushAttr();
       }
       switch (part.type) {
-        case "attr_name":
+        // The keyword opens the attribute, so the method's range starts here
+        // and the name that follows belongs to it.
+        case "attr_method_async":
           flushAttr();
-          cur = { name: part };
+          cur = { async: part };
+          break;
+        case "attr_name":
+          if (!cur?.async) flushAttr();
+          cur = { ...cur, name: part };
           add("attrName", part.startIndex, part.endIndex);
           break;
         case "type_args": {
@@ -244,7 +251,10 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
         case "method_body": {
           // attrMethod
           const a: Attr = cur ?? {};
-          const start = a.typeParams?.startIndex ?? a.args!.startIndex;
+          const start =
+            a.async?.startIndex ??
+            a.typeParams?.startIndex ??
+            a.args!.startIndex;
           ensureAttrName(start);
           add("attrMethod", start, part.endIndex);
           if (a.typeParams) {
@@ -302,6 +312,7 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
       }
       if (
         part.type === "attr_name" ||
+        part.type === "attr_method_async" ||
         part.type === "attr_value" ||
         part.type === "attr_bound_value" ||
         part.type === "attr_spread" ||
@@ -374,6 +385,7 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
         case "type_params":
         case "attr_group":
         case "attr_name":
+        case "attr_method_async":
         case "attr_value":
         case "attr_bound_value":
         case "attr_spread":

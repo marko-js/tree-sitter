@@ -79,6 +79,7 @@ enum TokenType {
   TYPES_CLOSE,              // ">"
   ATTR_GROUP_OPEN,          // "["
   ATTR_GROUP_CLOSE,         // "]"
+  ATTR_METHOD_ASYNC,        // "async" before a shorthand method
   ATTR_NAME,
   ATTR_EQ,                  // "="
   ATTR_BOUND_EQ,            // ":="
@@ -499,7 +500,11 @@ static bool should_terminate(EStream *es, ExprState *e, int32_t code,
           return next == '>';
         case '>':
           // `=>` continues unless it is the very start of the expression.
-          return at_start || prev != '=';
+          if (at_start) return true;
+          if (prev == '=') return false;
+          // A whitespace preceded ">=" is always a comparison: a closed tag
+          // would have put the "=" in its body content.
+          return !(is_ws(prev) && next == '=');
         default:
           return false;
       }
@@ -1333,6 +1338,80 @@ static ExprCfg cfg_type_expr(void) {
   cfg.in_type = true;
   cfg.force_type = true;
   return cfg;
+}
+
+static inline bool is_attr_name_char(int32_t c) {
+  return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+         (c >= '0' && c <= '9') || c == '_' || c == '$' || c == '-';
+}
+
+// Whitespace the async keyword may be separated from its method by. A newline
+// ends a concise mode attribute, so only indentation counts there.
+static inline bool skip_async_space(EStream *es, Scanner *s, uint32_t k) {
+  int32_t c = es_peek(es, k);
+  if (c < 0) return false;
+  return is_concise(s) ? is_indent_code(c) : is_ws(c);
+}
+
+// A token cannot be taken back, so the whole signature is checked up front:
+// the parser defers instead, until the args close and a "{" follows.
+// The attribute name is exactly "async": a longer name ("asyncfoo") or one
+// carrying a modifier ("async:mod") is an ordinary attribute name.
+static bool is_async_keyword(EStream *es) {
+  static const char kw[] = "async";
+  for (uint32_t i = 0; i < 5; i++) {
+    if (es_peek(es, i) != kw[i]) return false;
+  }
+  int32_t c = es_peek(es, 5);
+  return c != ':' && !is_attr_name_char(c);
+}
+
+static bool is_async_method_ahead(EStream *es, Scanner *s) {
+  uint32_t k = 0;
+  int32_t c;
+
+  // In concise mode a newline ends the attribute, so the method cannot
+  // continue onto the next line.
+  bool had_space = false;
+  while (skip_async_space(es, s, k)) {
+    k++;
+    had_space = true;
+  }
+
+  // An optional method name, which must be separated from the keyword.
+  if (is_attr_name_char(es_peek(es, k))) {
+    if (!had_space) return false;
+    while (is_attr_name_char(es_peek(es, k))) k++;
+    while (skip_async_space(es, s, k)) k++;
+  }
+
+  // Optional type params, then the params, then the body opener.
+  if (es_peek(es, k) == '<') {
+    uint32_t depth = 0;
+    do {
+      c = es_peek(es, k);
+      if (c < 0) return false;
+      if (c == '<') depth++;
+      else if (c == '>') depth--;
+      k++;
+    } while (depth);
+    while (skip_async_space(es, s, k)) k++;
+  }
+
+  if (es_peek(es, k) != '(') return false;
+  {
+    uint32_t depth = 0;
+    do {
+      c = es_peek(es, k);
+      if (c < 0) return false;
+      if (c == '(') depth++;
+      else if (c == ')') depth--;
+      k++;
+    } while (depth);
+  }
+
+  while (skip_async_space(es, s, k)) k++;
+  return es_peek(es, k) == '{';
 }
 
 static ExprCfg cfg_attr_name(Scanner *s) {
@@ -3273,6 +3352,18 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
     s->tag_has_attrs = 1;
   }
 
+  // Both readings span the same text, so only the symbol depends on the
+  // lookahead; marking first is what keeps the extent right while peeking.
+  if (c == 'a' && is_async_keyword(es)) {
+    for (int i = 0; i < 5; i++) es_next_mark(es);  // "async"
+    bool method = is_async_method_ahead(es, s);
+    if (!valid[method ? ATTR_METHOD_ASYNC : ATTR_NAME]) return false;
+    s->attr_stage = ATTR_NAME_STAGE;
+    lexer->result_symbol = method ? ATTR_METHOD_ASYNC : ATTR_NAME;
+    concise_tag_epilogue(s, lexer);
+    return true;
+  }
+
   if (c == '<') return false;  // INVALID_ATTRIBUTE_NAME
   {
     bool empty = false;
@@ -3550,7 +3641,8 @@ static const char *const TOKEN_NAMES[] = {
     "PARAM_TYPE", "PARAM_EQ", "PARAM_DEFAULT", "PARAM_COMMA",
     "PARAMS_CLOSE", "TYPE_ARGS_OPEN",
     "TYPE_PARAMS_OPEN", "TYPE_EXPR", "TYPES_CLOSE", "ATTR_GROUP_OPEN",
-    "ATTR_GROUP_CLOSE", "ATTR_NAME", "ATTR_EQ", "ATTR_BOUND_EQ",
+    "ATTR_GROUP_CLOSE", "ATTR_METHOD_ASYNC", "ATTR_NAME", "ATTR_EQ",
+    "ATTR_BOUND_EQ",
     "ATTR_SPREAD_START", "ATTR_VALUE_EXPR", "METHOD_BODY_OPEN",
     "METHOD_BODY_EXPR", "METHOD_BODY_CLOSE", "OPEN_TAG_END",
     "OPEN_TAG_END_SELF", "CONCISE_OPEN_TAG_END", "CLOSE_TAG_START",
