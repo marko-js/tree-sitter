@@ -4,6 +4,12 @@ import { loadHtmljs } from "./htmljs.mts";
 // Works both inside the htmljs-parser repository (compares against the
 // local sources) and standalone (compares against the published package).
 const { createParser, ErrorCode, TagType } = await loadHtmljs();
+
+// ErrorCode maps names to numbers, so the name needs a reverse lookup.
+const errorCodeNames = new Map<number, string>(
+  Object.entries(ErrorCode).map(([name, code]) => [code as number, name]),
+);
+const errorCodeName = (code: number) => errorCodeNames.get(code) ?? String(code);
 type TagType = (typeof TagType)[keyof typeof TagType];
 
 export interface Event {
@@ -44,7 +50,7 @@ export function parseEvents(src: string): Event[] {
   const tagStack: { type: TagType; range: Ranges.Template }[] = [];
   const parser = createParser({
     onError(range) {
-      add(`error(${ErrorCode[range.code]}:${range.message})`, range);
+      add(`error(${errorCodeName(range.code)}:${range.message})`, range);
     },
     onText(range) {
       add("text", range);

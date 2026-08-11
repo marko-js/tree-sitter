@@ -37,6 +37,14 @@ const fmt = (e: Event) => `${e.label} [${e.start},${e.end}]`;
  *   an error, and all events that end at or before the error's start must
  *   match.
  */
+/**
+ * Errors that report an ambiguity rather than a malformed document: the parser
+ * has already committed to a reading, and the grammar produces that reading.
+ */
+const ADVISORY = new Set(["AMBIGUOUS_ATTRIBUTE_VALUE"]);
+
+const errorLabelCode = (label: string) => label.slice("error(".length, label.indexOf(":"));
+
 export function compare(src: string): CompareResult {
   const expectedAll = parseEvents(src);
   let tree;
@@ -59,6 +67,10 @@ export function compare(src: string): CompareResult {
 
   const errorEvent = expectedAll.find((e) => e.label.startsWith("error("));
   const isErrorCase = errorEvent !== undefined;
+  // Diagnostics the parser raises about an interpretation it already made, so
+  // the tree is expected to hold that interpretation rather than an error.
+  const isAdvisory =
+    errorEvent !== undefined && ADVISORY.has(errorLabelCode(errorEvent.label));
 
   let expected: Event[];
   let actual: Event[];
@@ -115,6 +127,7 @@ export function compare(src: string): CompareResult {
   let message: string | undefined;
   if (
     isErrorCase &&
+    !isAdvisory &&
     !tree.rootNode.hasError &&
     lastTokenEnd(tree.rootNode) > errorEvent.start
   ) {
