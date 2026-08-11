@@ -70,6 +70,10 @@
           "named": true
         },
         {
+          "type": "attr_method_async",
+          "named": true
+        },
+        {
           "type": "attr_name",
           "named": true
         },
@@ -239,6 +243,10 @@
         },
         {
           "type": "attr_group",
+          "named": true
+        },
+        {
+          "type": "attr_method_async",
           "named": true
         },
         {
@@ -747,6 +755,10 @@
   },
   {
     "type": "attr_group_open",
+    "named": true
+  },
+  {
+    "type": "attr_method_async",
     "named": true
   },
   {
