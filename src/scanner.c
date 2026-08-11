@@ -743,6 +743,11 @@ static bool check_for_operators(EStream *es, ExprState *e, bool eol) {
     }
 
     int32_t next_c = es_peek(es, k);
+    // In HTML mode a "</" is a close tag rather than a less-than operator.
+    if (!is_concise(s) && next_c == '<' && es_peek(es, k + 1) == '/') {
+      return false;
+    }
+
     if (next_c >= 0 && !should_terminate(es, e, next_c, k)) {
       int64_t consume = look_ahead_for_operator(es, e, k);
       if (consume != -1) {
