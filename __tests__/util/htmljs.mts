@@ -7,9 +7,9 @@
 //    `tree-sitter/`): the parser sources and fixtures two levels up are used
 //    directly, so the comparison always tracks the local parser;
 //  - standalone: the fixtures *and* the parser sources are fetched together
-//    into `.cache/` with degit, so they share a revision (this is what CI
-//    uses); the published `htmljs-parser` package is only a last-resort
-//    fallback;
+//    into `.cache/` with degit at the tag matching the `htmljs-parser`
+//    devDependency, so they share a revision (this is what CI uses); the
+//    published `htmljs-parser` package is only a last-resort fallback;
 //  - HTMLJS_FIXTURES override: point at any htmljs-parser `src/__tests__/
 //    fixtures` directory and the adjacent `src` is used as the parser too.
 import fs from "node:fs";
@@ -19,7 +19,12 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const LOCAL_SRC = path.join(here, "../../../src");
 const isLocal = fs.existsSync(path.join(LOCAL_SRC, "index.ts"));
-const CACHE = path.join(here, "../../.cache/htmljs-parser");
+// The devDependency range picks the revision, so bumping it moves the corpus.
+const REF = `v${JSON.parse(
+  fs.readFileSync(path.join(here, "../../package.json"), "utf-8"),
+).devDependencies["htmljs-parser"].replace(/^[\^~]/, "")}`;
+// Keyed by ref so a new pin never reuses the previous clone.
+const CACHE = path.join(here, `../../.cache/htmljs-parser@${REF}`);
 
 export interface HtmljsApi {
   createParser: (typeof import("htmljs-parser"))["createParser"];
@@ -62,7 +67,7 @@ export async function fixturesDir(): Promise<string> {
   const cached = path.join(CACHE, "src/__tests__/fixtures");
   if (!fs.existsSync(cached)) {
     const { default: degit } = await import("degit");
-    await degit("marko-js/htmljs-parser").clone(CACHE);
+    await degit(`marko-js/htmljs-parser#${REF}`).clone(CACHE);
   }
   return cached;
 }
