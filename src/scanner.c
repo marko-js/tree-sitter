@@ -1371,9 +1371,89 @@ static bool is_async_keyword(EStream *es) {
   return c != ':' && !is_attr_name_char(c);
 }
 
+// Skips a balanced group, stepping over the literals and comments whose
+// contents would otherwise be counted as delimiters.
+static bool skip_async_group(EStream *es, uint32_t *pk, int32_t open,
+                             int32_t close) {
+  uint32_t k = *pk;
+  uint32_t depth = 0;
+  int32_t prev = 0;
+
+  do {
+    int32_t c = es_peek(es, k);
+    if (c < 0) return false;
+
+    if (c == '"' || c == '\'' || c == '`') {
+      int32_t quote = c;
+      uint32_t tmpl_depth = 0;
+      k++;
+      for (;;) {
+        c = es_peek(es, k);
+        if (c < 0) return false;
+        k++;
+        if (c == '\\') {
+          if (es_peek(es, k) < 0) return false;
+          k++;
+        } else if (quote == '`' && c == '$' && es_peek(es, k) == '{') {
+          tmpl_depth++;
+          k++;
+        } else if (tmpl_depth && c == '}') {
+          tmpl_depth--;
+        } else if (c == quote && !tmpl_depth) {
+          break;
+        }
+      }
+      prev = quote;
+      continue;
+    }
+
+    if (c == '/') {
+      int32_t next = es_peek(es, k + 1);
+      if (!can_follow_division(prev)) {  // a regular expression literal
+        bool in_class = false;
+        k++;
+        for (;;) {
+          c = es_peek(es, k);
+          if (c < 0 || c == '\n') return false;
+          k++;
+          if (c == '\\') {
+            if (es_peek(es, k) < 0) return false;
+            k++;
+          } else if (c == '[') in_class = true;
+          else if (c == ']') in_class = false;
+          else if (c == '/' && !in_class) break;
+        }
+        prev = '/';
+        continue;
+      }
+      if (next == '/') {
+        while ((c = es_peek(es, k)) >= 0 && c != '\n') k++;
+        continue;
+      }
+      if (next == '*') {
+        k += 2;
+        while ((c = es_peek(es, k)) >= 0 &&
+               !(c == '*' && es_peek(es, k + 1) == '/')) {
+          k++;
+        }
+        if (c < 0) return false;
+        k += 2;
+        continue;
+      }
+    }
+
+    if (c == open) depth++;
+    else if (c == close) depth--;
+    if (!is_ws(c)) prev = c;
+    k++;
+  } while (depth);
+
+  *pk = k;
+  return true;
+}
+
 static bool is_async_method_ahead(EStream *es, Scanner *s) {
   uint32_t k = 0;
-  int32_t c;
 
   // In concise mode a newline ends the attribute, so the method cannot
   // continue onto the next line.
@@ -1392,28 +1472,12 @@ static bool is_async_method_ahead(EStream *es, Scanner *s) {
 
   // Optional type params, then the params, then the body opener.
   if (es_peek(es, k) == '<') {
-    uint32_t depth = 0;
-    do {
-      c = es_peek(es, k);
-      if (c < 0) return false;
-      if (c == '<') depth++;
-      else if (c == '>') depth--;
-      k++;
-    } while (depth);
+    if (!skip_async_group(es, &k, '<', '>')) return false;
     while (skip_async_space(es, s, k)) k++;
   }
 
   if (es_peek(es, k) != '(') return false;
-  {
-    uint32_t depth = 0;
-    do {
-      c = es_peek(es, k);
-      if (c < 0) return false;
-      if (c == '(') depth++;
-      else if (c == ')') depth--;
-      k++;
-    } while (depth);
-  }
+  if (!skip_async_group(es, &k, '(', ')')) return false;
 
   while (skip_async_space(es, s, k)) k++;
   return es_peek(es, k) == '{';
