@@ -38,10 +38,13 @@ const fmt = (e: Event) => `${e.label} [${e.start},${e.end}]`;
  *   match.
  */
 /**
- * Errors that report an ambiguity rather than a malformed document: the parser
- * has already committed to a reading, and the grammar produces that reading.
+ * Errors the grammar deliberately does not reproduce: the tree still holds the
+ * structure the source describes, so reporting them is the parser's job alone.
  */
-const ADVISORY = new Set(["AMBIGUOUS_ATTRIBUTE_VALUE"]);
+const ADVISORY = new Set([
+  "AMBIGUOUS_ATTRIBUTE_VALUE",
+  "INVALID_ATTR_TYPE_PARAMS",
+]);
 
 const errorLabelCode = (label: string) => label.slice("error(".length, label.indexOf(":"));
 
