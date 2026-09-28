@@ -571,6 +571,42 @@ static const char *const BINARY_KEYWORDS[] = {
 };
 static const char *const RELATIONAL_KEYWORDS[] = {"in", "instanceof", NULL};
 
+static bool es_peek_matches(EStream *es, uint32_t k, const char *str) {
+  for (uint32_t j = 0; str[j]; j++) {
+    if (es_peek(es, k + j) != (int32_t)str[j]) return false;
+  }
+  return true;
+}
+
+// prepareScriptlet's type look-ahead from offset `k`: `declare`, `interface`
+// or `type` (after spaces) before a name, or `type` before `{`/`*`, starts a
+// type; `type = 1` and `type in x` stay JavaScript.
+static bool looks_like_type_statement(EStream *es, uint32_t k) {
+  static const char *const TYPE_KEYWORDS[] = {"declare", "interface", "type",
+                                              NULL};
+  while (is_indent_code(es_peek(es, k))) k++;
+  for (int i = 0; TYPE_KEYWORDS[i]; i++) {
+    if (!es_peek_matches(es, k, TYPE_KEYWORDS[i])) continue;
+
+    uint32_t n = k + (uint32_t)strlen(TYPE_KEYWORDS[i]);
+    if (!is_indent_code(es_peek(es, n))) return false;
+    while (is_indent_code(es_peek(es, n))) n++;
+
+    int32_t c = es_peek(es, n);
+    if (c == '{' || c == '*') return strcmp(TYPE_KEYWORDS[i], "type") == 0;
+    if (!is_word_code(c) || (c >= '0' && c <= '9')) return false;
+    for (int b = 0; BINARY_KEYWORDS[b]; b++) {
+      if (es_peek_matches(es, n, BINARY_KEYWORDS[b]) &&
+          !is_word_code(
+              es_peek(es, n + (uint32_t)strlen(BINARY_KEYWORDS[b])))) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
+}
+
 static int64_t look_behind_for(EStream *es, int64_t pos, const char *str) {
   int64_t len = (int64_t)strlen(str);
   int64_t end_pos = pos - len + 1;
@@ -618,16 +654,20 @@ static int64_t look_behind_for_operator(EStream *es, ExprState *e,
       return cur_pos < 0 ? 0 : cur_pos;
 
     case '!': {
-      // After an operand, `!` is a TypeScript non-null assertion (postfix);
-      // after a keyword operator (`typeof!a`, `a in!b`) it is the prefix `!`.
-      int32_t prev = es_at(es, cur_pos - 1);
-      switch (prev) {
-        case ')': case ']':
+      // After an operand, `!` is a TypeScript non-null assertion (postfix),
+      // as is each `!` of a run after one (`x!!`); after a keyword operator
+      // (`typeof!a`, `a in!b`) it is the prefix `!`.
+      int64_t operand_end = cur_pos - 1;
+      while (es_at(es, operand_end) == '!') operand_end--;
+      int32_t operand = es_at(es, operand_end);
+      switch (operand) {
+        case ')': case ']': case '"': case '\'': case '`':
           return -1;
         default:
-          return is_word_code(prev) &&
-                         look_behind_for_operator(es, e, cur_pos) == -1 &&
-                         look_behind_for_keyword(es, cur_pos - 1,
+          return is_word_code(operand) &&
+                         look_behind_for_operator(es, e, operand_end + 1) ==
+                             -1 &&
+                         look_behind_for_keyword(es, operand_end,
                                                  RELATIONAL_KEYWORDS) == -1
                      ? -1
                      : (cur_pos < 0 ? 0 : cur_pos);
@@ -1676,7 +1716,16 @@ static bool scan_scriptlet_body(Scanner *s, TSLexer *lexer, const bool *valid,
     memset(&cfg, 0, sizeof(cfg));
     cfg.operators = true;
     cfg.terminated_by_eol = true;
-    if (!scan_expr_token(s, lexer, cfg, NULL)) return false;
+    EStream es;
+    es_init(&es, s, lexer, true);
+    mark(s, lexer);  // empty expression: zero-width token
+    if (looks_like_type_statement(&es, 0)) {
+      cfg.in_type = true;
+      cfg.force_type = true;
+    }
+    bool ok = scan_expr_es(&es, cfg, NULL);
+    es_free(&es);
+    if (!ok) return false;
     *result = SCRIPTLET_EXPR;
     return true;
   }
@@ -2868,23 +2917,10 @@ static bool scan_statement_tail(Scanner *s, TSLexer *lexer, const bool *valid,
   cfg.terminated_by_eol = true;
   cfg.consume_indented = true;
 
-  // lookAheadFor("declare " | "interface " | "type ") from pos + 1.
-  static const char *const PREFIXES[] = {"declare ", "interface ", "type ",
-                                         NULL};
-  for (int i = 0; PREFIXES[i]; i++) {
-    const char *p = PREFIXES[i];
-    bool match_p = true;
-    for (uint32_t j = 0; p[j]; j++) {
-      if (es_peek(es, 1 + j) != (int32_t)p[j]) {
-        match_p = false;
-        break;
-      }
-    }
-    if (match_p) {
-      cfg.in_type = true;
-      cfg.force_type = true;
-      break;
-    }
+  // prepareStatement: the code starts one past the tag name.
+  if (looks_like_type_statement(es, 1)) {
+    cfg.in_type = true;
+    cfg.force_type = true;
   }
 
   if (!scan_expr_es(es, cfg, NULL)) return false;
