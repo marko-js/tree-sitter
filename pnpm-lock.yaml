@@ -34,8 +34,8 @@ importers:
         specifier: ^2.8.4
         version: 2.8.6
       htmljs-parser:
-        specifier: ^5.17.1
-        version: 5.17.1
+        specifier: ^5.18.0
+        version: 5.18.0
       mocha:
         specifier: ^12.0.2
         version: 12.0.2
@@ -518,8 +518,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  htmljs-parser@5.17.1:
-    resolution: {integrity: sha512-ww3wkVhxedYGoqZIFbA5tQfgyDvdqv2rIOkMsdu4fez2XOAcOgR+3ZLKbpFwhfaOWYAmSpj8JFrjOqRcjAg+Sg==}
+  htmljs-parser@5.18.0:
+    resolution: {integrity: sha512-ANKBAi2UyiQ7K/In2a3jZLt/WLAIKl8GFE3k5KIYEaroUdOBtt/gnclkJcSMI+kPChWdGOw3YHnbequVNy39Tg==}
 
   human-id@4.2.0:
     resolution: {integrity: sha512-K3GbkIWqyvvlpfhBPlbEvD97TtqBpAYA4kt+cn2lD2x2HuohzZCibcA2nOlnJT6exqvJLggoB5nv2dNf192nEA==}
@@ -1406,7 +1406,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  htmljs-parser@5.17.1: {}
+  htmljs-parser@5.18.0: {}
 
   human-id@4.2.0: {}
 
