@@ -743,9 +743,15 @@ static bool check_for_operators(EStream *es, ExprState *e, bool eol) {
     }
 
     int32_t next_c = es_peek(es, k);
-    // In HTML mode a "</" is a close tag rather than a less-than operator.
-    if (!is_concise(s) && next_c == '<' && es_peek(es, k + 1) == '/') {
-      return false;
+    // A "</" close tag (html mode) or a "<!--" html comment is markup rather
+    // than a less-than operator, which look_ahead_for_operator would otherwise
+    // continue across.
+    if (next_c == '<') {
+      if (!is_concise(s) && es_peek(es, k + 1) == '/') return false;
+      if (es_peek(es, k + 1) == '!' && es_peek(es, k + 2) == '-' &&
+          es_peek(es, k + 3) == '-') {
+        return false;
+      }
     }
 
     if (next_c >= 0 && !should_terminate(es, e, next_c, k)) {

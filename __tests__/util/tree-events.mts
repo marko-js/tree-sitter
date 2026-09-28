@@ -517,9 +517,7 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
       }
       case "scriptlet": {
         const kids = childrenOf(node);
-        const startTok = kids[0];
-        const concise = startTok.type === "scriptlet_start_concise";
-        const start = node.startIndex + (concise ? 1 : 0);
+        const start = node.startIndex;
         const body = kids[1];
         if (body?.type === "scriptlet_block") {
           // The parser emits onScriptlet only when the block's "}" is
