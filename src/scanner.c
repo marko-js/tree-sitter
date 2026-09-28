@@ -555,16 +555,21 @@ static bool should_terminate(EStream *es, ExprState *e, int32_t code,
   return false;
 }
 
+// Only JavaScript has `delete` and `void` operators; in a type `void` is the
+// `void` type. `return`, `throw` and `yield` are left out: JavaScript allows
+// no line break after them, so they never continue an expression.
 static const char *const UNARY_KEYWORDS[] = {
-    "async", "await", "class", "function", "new", "typeof", "void", NULL,
+    "async", "await", "class", "function", "new", "typeof", "delete", "void",
+    NULL,
 };
 static const char *const TS_UNARY_KEYWORDS[] = {
-    "async",  "await",   "class", "function", "new",   "typeof", "void",
-    "asserts", "infer",  "is",    "keyof",    "readonly", "unique", NULL,
+    "async",   "await", "class", "function", "new",      "typeof",
+    "asserts", "infer", "is",    "keyof",    "readonly", "unique", NULL,
 };
 static const char *const BINARY_KEYWORDS[] = {
     "as", "extends", "instanceof", "in", "satisfies", NULL,
 };
+static const char *const RELATIONAL_KEYWORDS[] = {"in", "instanceof", NULL};
 
 static int64_t look_behind_for(EStream *es, int64_t pos, const char *str) {
   int64_t len = (int64_t)strlen(str);
@@ -586,6 +591,19 @@ static int64_t look_behind_while_ws(EStream *es, int64_t pos) {
   return 0;
 }
 
+// Returns where a whole keyword ending at `pos` starts, or -1.
+static int64_t look_behind_for_keyword(EStream *es, int64_t pos,
+                                       const char *const *keywords) {
+  for (int i = 0; keywords[i]; i++) {
+    int64_t keyword_pos = look_behind_for(es, pos, keywords[i]);
+    if (keyword_pos != -1) {
+      int32_t before = keyword_pos > 0 ? es_at(es, keyword_pos - 1) : -1;
+      return is_word_or_period_code(before) ? -1 : keyword_pos;
+    }
+  }
+  return -1;
+}
+
 // lookBehindForOperator: `pos` is a buf index just past the candidate.
 static int64_t look_behind_for_operator(EStream *es, ExprState *e,
                                         int64_t pos) {
@@ -593,11 +611,28 @@ static int64_t look_behind_for_operator(EStream *es, ExprState *e,
   int32_t code = es_at(es, cur_pos);
 
   switch (code) {
-    case '&': case '*': case '^': case ':': case '=': case '!':
+    case '&': case '*': case '^': case ':': case '=':
     case '<': case '%': case '|': case '?': case '~':
       // The operator may sit just before the token start (cur_pos == -1, eg
       // resuming a tag var type after its ":"); callers only test != -1.
       return cur_pos < 0 ? 0 : cur_pos;
+
+    case '!': {
+      // After an operand, `!` is a TypeScript non-null assertion (postfix);
+      // after a keyword operator (`typeof!a`, `a in!b`) it is the prefix `!`.
+      int32_t prev = es_at(es, cur_pos - 1);
+      switch (prev) {
+        case ')': case ']':
+          return -1;
+        default:
+          return is_word_code(prev) &&
+                         look_behind_for_operator(es, e, cur_pos) == -1 &&
+                         look_behind_for_keyword(es, cur_pos - 1,
+                                                 RELATIONAL_KEYWORDS) == -1
+                     ? -1
+                     : (cur_pos < 0 ? 0 : cur_pos);
+      }
+    }
 
     case '>':
       if (es_at(es, cur_pos - 1) == '=') return cur_pos - 1;
@@ -629,16 +664,8 @@ static int64_t look_behind_for_operator(EStream *es, ExprState *e,
 
     default: {
       if (code < 'a' || code > 'z') return -1;
-      const char *const *keywords =
-          e->in_type ? TS_UNARY_KEYWORDS : UNARY_KEYWORDS;
-      for (int i = 0; keywords[i]; i++) {
-        int64_t keyword_pos = look_behind_for(es, cur_pos, keywords[i]);
-        if (keyword_pos != -1) {
-          int32_t before = keyword_pos > 0 ? es_at(es, keyword_pos - 1) : -1;
-          return is_word_or_period_code(before) ? -1 : keyword_pos;
-        }
-      }
-      return -1;
+      return look_behind_for_keyword(
+          es, cur_pos, e->in_type ? TS_UNARY_KEYWORDS : UNARY_KEYWORDS);
     }
   }
 }
