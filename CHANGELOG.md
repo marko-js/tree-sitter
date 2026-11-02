@@ -1,5 +1,11 @@
 # @marko/tree-sitter
 
+## 0.4.0
+
+### Minor Changes
+
+- [#18](https://github.com/marko-js/tree-sitter/pull/18) [`e52f872`](https://github.com/marko-js/tree-sitter/commit/e52f87273a244749f34e471b56bb183c11c1fc24) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Match htmljs-parser 5.20's concise line starts: a line starting with `-` and a word character (eg `-if(x)`, `-else-if`, `-my-tag`) opens a tag whose name starts with `-`, and a line starting with `;` is ignored, with only comments allowed after it. An open tag that ends before its name (eg a line of just `,`, or `<,>`) now gets an empty `tag_name` instead of failing to parse, and a name after a leading `,` and comments (eg `, /* note */ div`) is read as the tag name.
+
 ## 0.3.1
 
 ### Patch Changes
