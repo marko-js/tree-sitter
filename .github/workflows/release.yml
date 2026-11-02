@@ -5,7 +5,8 @@ name: Release
 # Every push to main runs the `release` job (changesets/action):
 #   - if .changeset/*.md files are pending, it opens/updates a "[ci] release"
 #     PR that runs `pnpm run version` (bumps package.json + tree-sitter.json,
-#     writes CHANGELOG.md, consumes the changesets);
+#     regenerates src/parser.c, whose metadata carries the version, writes
+#     CHANGELOG.md, consumes the changesets);
 #   - when that PR is merged (no changesets left), it runs the publish command
 #     `pnpm run release:tag`, which tags the release and sets the action's
 #     `published` output to true.

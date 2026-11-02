@@ -2583,6 +2583,19 @@ static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
 // Concise mode content (CONCISE_HTML_CONTENT)
 // --------------------------------------------------------------------------
 
+// In concise mode only whitespace may follow a comment block on its line; the
+// comment event still fires before the error.
+static void check_block_comment_tail(Scanner *s, EStream *es) {
+  for (uint32_t k = 0;; k++) {
+    int32_t c = es_peek(es, k);
+    if (c < 0 || is_line(c)) return;
+    if (!is_ws(c)) {
+      s->fail_next = 1;  // INVALID_CHARACTER after this token
+      return;
+    }
+  }
+}
+
 static bool scan_concise(Scanner *s, TSLexer *lexer, const bool *valid,
                          TSSymbol *result) {
   // Trivia: newlines and indentation.
@@ -2656,6 +2669,7 @@ static bool scan_concise(Scanner *s, TSLexer *lexer, const bool *valid,
     } else if (n1 == '*') {
       *result = BLOCK_COMMENT;
       ok = es_consume_block_comment(&es) && valid[BLOCK_COMMENT];
+      if (ok) check_block_comment_tail(s, &es);
     }
     es_free(&es);
     return ok;
@@ -2691,6 +2705,14 @@ static bool scan_concise(Scanner *s, TSLexer *lexer, const bool *valid,
     }
   }
 
+  if (c == ';') {
+    // An empty line, as after a tag ended by ";": the ";" is trivia and only
+    // comments may follow it.
+    skipc(s, lexer);
+    s->semicolon_line = 1;
+    return scan_concise(s, lexer, valid, result);
+  }
+
   if (c == '<') {
     // Begin a mixed-mode html block; HTML_CONTENT handles the "<".
     s->begin_mixed_mode = 1;
@@ -2715,12 +2737,17 @@ static bool scan_concise(Scanner *s, TSLexer *lexer, const bool *valid,
   }
 
   if (c == '-') {
-    if (es_peek(&es, 1) == '-') {
+    int32_t n1 = es_peek(&es, 1);
+    if (n1 == '-') {
       ok = valid[BLOCK_OPEN] && scan_block_open(s, &es, result);
+      es_free(&es);
+      return ok;
     }
-    // else: INVALID_LINE_START: single hyphen
-    es_free(&es);
-    return ok;
+    if ((t && t->type == TAG_TEXT) || !is_word_code(n1)) {
+      es_free(&es);
+      return false;  // INVALID_LINE_START: single hyphen
+    }
+    // A tag name starting with "-" (eg "-if"): the open tag below reads it.
   }
 
   if (c == '/') {
@@ -2731,20 +2758,7 @@ static bool scan_concise(Scanner *s, TSLexer *lexer, const bool *valid,
       ok = valid[LINE_COMMENT];
     } else if (n1 == '*') {
       ok = es_consume_block_comment(&es);
-      if (ok) {
-        // In concise mode, only whitespace may follow a comment block; the
-        // comment event still fires before the error.
-        uint32_t k = 0;
-        while (true) {
-          int32_t c2 = es_peek(&es, k);
-          if (c2 < 0 || is_line(c2)) break;
-          if (!is_ws(c2)) {
-            s->fail_next = 1;  // INVALID_CHARACTER after this token
-            break;
-          }
-          k++;
-        }
-      }
+      if (ok) check_block_comment_tail(s, &es);
       *result = BLOCK_COMMENT;
       ok = ok && valid[BLOCK_COMMENT];
     }
@@ -2783,6 +2797,14 @@ static bool is_tag_name_terminator(Scanner *s, int32_t c, int32_t next) {
     default:
       return false;
   }
+}
+
+// Nothing of the tag name is read yet: OPEN_TAG still skips "," and
+// whitespace, and TAG_NAME starts at the next char.
+static bool tag_name_pending(Scanner *s) {
+  TagFrame *t = top_tag(s);
+  return t && !s->tag_name_done && !s->in_shorthand && t->name_len == 0 &&
+         !(t->flags & TF_NAME_INTERP);
 }
 
 // Finish the current tag name segment (called when a terminator is seen).
@@ -2939,6 +2961,14 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
   // ---- statement tags: the expression starts immediately after the name
   if (s->statement_pending) {
     return scan_statement_tail(s, lexer, valid, es);
+  }
+
+  // ---- a ";" read before the (empty) name, eg ",;", ended the tag there
+  if (s->semicolon_line) {
+    if (!valid[CONCISE_OPEN_TAG_END]) return false;
+    open_tag_ended(s, false);
+    lexer->result_symbol = CONCISE_OPEN_TAG_END;  // zero-width
+    return true;
   }
 
   // ---- grammar-position expressions (no trivia before them)
@@ -3174,6 +3204,22 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
 
   // ---- trivia loop (only when no lookahead is pending)
   while (es_drained(es)) {
+    if (concise && tag_name_pending(s) &&
+        (at_eof(lexer) || is_line(lexer->lookahead) ||
+         lexer->lookahead == ';')) {
+      // The open tag ends before a name (eg a line of just "," or ",;"): it
+      // is named empty where it ends, which is after a ";".
+      if (!valid[TAG_NAME_EMPTY]) return false;
+      if (!at_eof(lexer) && lexer->lookahead == ';') {
+        skipc(s, lexer);
+        s->semicolon_line = 1;  // the open tag ends on the next scan
+      }
+      finalize_tag_name(s, -1);
+      mark(s, lexer);
+      lexer->result_symbol = TAG_NAME_EMPTY;
+      return true;
+    }
+
     if (at_eof(lexer)) {
       if (!s->tag_name_done || s->in_shorthand) finalize_tag_name(s, -1);
       s->statement_pending = 0;  // an empty statement expression: no events
@@ -3188,7 +3234,7 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
 
     int32_t cc = lexer->lookahead;
 
-    if ((!s->tag_name_done || s->in_shorthand) &&
+    if ((!s->tag_name_done || s->in_shorthand) && !tag_name_pending(s) &&
         (is_ws(cc) || cc == ',')) {
       // TAG_NAME terminates at whitespace/comma before any trivia skipping.
       finalize_tag_name(s, cc);
@@ -3232,6 +3278,29 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
       continue;
     }
 
+    if (cc == '/' && tag_name_pending(s)) {
+      // OPEN_TAG reads comments before TAG_NAME (eg ", /* c */ div"), so the
+      // name starts after them. An open tag comment is a hidden token anyway,
+      // so skip it as trivia; any other "/" ends an empty name here.
+      mark(s, lexer);
+      int32_t n1 = es_peek(es, 1);
+      if (n1 != '/' && n1 != '*') break;
+      es_next(es);      // "/": skipping the rest drops it from the token
+      skipc(s, lexer);  // "/" or "*"
+      if (n1 == '/') {
+        while (!at_eof(lexer) && !is_line(lexer->lookahead)) skipc(s, lexer);
+      } else {
+        int32_t prev = 0;
+        while (!at_eof(lexer) && !(prev == '*' && lexer->lookahead == '/')) {
+          prev = lexer->lookahead;
+          skipc(s, lexer);
+        }
+        if (at_eof(lexer)) return false;  // MALFORMED_COMMENT
+        skipc(s, lexer);
+      }
+      continue;
+    }
+
     break;
   }
 
@@ -3248,6 +3317,18 @@ static bool scan_open_tag_es(Scanner *s, TSLexer *lexer, const bool *valid,
 
   // ---- tag name section (TAG_NAME handles its chars before OPEN_TAG does)
   if (!s->tag_name_done || s->in_shorthand) {
+    if (concise && c == '-' && tag_name_pending(s)) {
+      // OPEN_TAG reads "-" before TAG_NAME: a name only starts with "-" and a
+      // word char (eg "-if"), and "--" ends the tag before a name.
+      int32_t n1 = es_peek(es, 1);
+      if (n1 == '-') {
+        if (!valid[TAG_NAME_EMPTY]) return false;
+        finalize_tag_name(s, c);
+        lexer->result_symbol = TAG_NAME_EMPTY;  // zero-width at the "--"
+        return true;
+      }
+      if (!is_word_code(n1)) return false;  // MALFORMED_OPEN_TAG
+    }
     TSSymbol name_sym = 0;
     int r = scan_tag_name_token(s, valid, es, &name_sym);
     if (r == 0) return false;
