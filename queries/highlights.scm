@@ -13,6 +13,7 @@
 (shorthand_class) @property
 
 (attr_name) @attribute
+(attr_method_async) @keyword
 
 ; Binding positions: patterns get the TS injection; types are captured
 ; flatly because a bare type is not a valid TS program (matching the
