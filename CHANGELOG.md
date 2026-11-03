@@ -1,5 +1,11 @@
 # @marko/tree-sitter
 
+## 0.4.1
+
+### Patch Changes
+
+- [#20](https://github.com/marko-js/tree-sitter/pull/20) [`4180ef8`](https://github.com/marko-js/tree-sitter/commit/4180ef8a8a22fbc23b38162a9751eda1c4bd1215) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Highlight the `async` modifier of a shorthand method (`attr_method_async`) as a keyword. Since the node was added it had no capture, so `async` lost the attribute highlighting it had before.
+
 ## 0.4.0
 
 ### Minor Changes
