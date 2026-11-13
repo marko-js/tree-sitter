@@ -464,7 +464,8 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
           node.startIndex,
           node.endIndex,
           node.startIndex + 4,
-          node.endIndex - 3,
+          // "<!--->" shares a hyphen between its "<!--" and "-->"
+          Math.max(node.startIndex + 4, node.endIndex - 3),
         );
         break;
       case "line_comment":
@@ -554,6 +555,14 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
         break;
       case "tag_name":
       case "tag_name_fragment":
+        // A name or shorthand fires once its template completes, which one
+        // cut off inside an interpolation (`foo${x` at EOF) never does.
+        if (
+          node.type === "tag_name_fragment" &&
+          node.nextSibling?.type === "placeholder_start"
+        ) {
+          break;
+        }
         addTemplate(
           "tagName",
           node.startIndex,
@@ -615,7 +624,10 @@ export function treeEvents(src: string, root: SyntaxNode): Event[] {
         break;
       }
       case "args": {
-        if (node.nextNamedSibling?.type === "method_body") break;
+        // Args a "{" follows are a method's params (attrArgs never fires),
+        // even when the error cut off its body.
+        const next = node.nextNamedSibling?.type;
+        if (next === "method_body" || next === "method_body_open") break;
         const [vs, ve] = innerValue(node, "args_expr");
         const prev = node.previousNamedSibling;
         const attrish =

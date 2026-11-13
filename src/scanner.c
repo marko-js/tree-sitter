@@ -173,12 +173,22 @@ typedef struct {
 #define MAX_TAGS 24
 #define MAX_CONTENTS 12
 
+// The longest operand keyword ("instanceof").
+#define KEYWORD_MAX 10
+// Cursor.word_len of a word after a ".": a property name, never a keyword.
+#define WORD_AFTER_PERIOD UINT8_MAX
+
 // Position bookkeeping replacing the parser's backwards reads of the source.
 // Committed in lock-step with mark_end (see `mark`).
 typedef struct {
   uint8_t prev_char;
   uint8_t prev_nonws_char;
   uint8_t line_only_ws;  // only whitespace since the last newline
+  // The word prev_nonws_char ends (0: it is not a word char), so a "/" can
+  // tell a keyword from an operand across token boundaries: its length
+  // (saturating) and its first KEYWORD_MAX chars.
+  uint8_t word_len;
+  char word[KEYWORD_MAX];
   uint16_t cur_indent_len;
   uint32_t cur_indent_hash;
 } Cursor;
@@ -224,6 +234,7 @@ typedef struct {
   // scratch (not serialized)
   char *buf;
   uint32_t buf_len, buf_cap;
+  uint8_t saved_pstring_quote;  // the top content frame's, as of `mark`
 } Scanner;
 
 // ATTR_STAGE mirror of states/ATTRIBUTE.ts
@@ -253,6 +264,16 @@ static inline ContentFrame *top_content(Scanner *s) {
 }
 
 static void cursor_advance(Cursor *cur, int32_t c) {
+  if (is_word_code(c)) {
+    if (!cur->word_len || !is_word_code(cur->prev_char)) {
+      cur->word_len = cur->prev_char == '.' ? WORD_AFTER_PERIOD : 0;
+    }
+    if (cur->word_len < KEYWORD_MAX) cur->word[cur->word_len] = (char)c;
+    if (cur->word_len < UINT8_MAX) cur->word_len++;
+  } else if (!is_ws(c)) {
+    cur->word_len = 0;
+  }
+
   cur->prev_char = (uint8_t)(c & 0xff);
   if (is_line(c)) {
     cur->line_only_ws = 1;
@@ -280,6 +301,8 @@ static inline void skipc(Scanner *s, TSLexer *lexer) {
 static inline void mark(Scanner *s, TSLexer *lexer) {
   lexer->mark_end(lexer);
   s->saved = s->cur;
+  ContentFrame *f = top_content(s);
+  s->saved_pstring_quote = f ? f->pstring_quote : 0;
 }
 
 static inline bool at_eof(TSLexer *lexer) { return lexer->eof(lexer); }
@@ -569,7 +592,12 @@ static const char *const TS_UNARY_KEYWORDS[] = {
 static const char *const BINARY_KEYWORDS[] = {
     "as", "extends", "instanceof", "in", "satisfies", NULL,
 };
-static const char *const RELATIONAL_KEYWORDS[] = {"in", "instanceof", NULL};
+// Keywords an operand follows, so a "/" after one starts a regular expression
+// (`return /x/`) and a "!" after one is the prefix operator (`return !x`).
+static const char *const OPERAND_KEYWORDS[] = {
+    "await", "case",  "delete", "do",     "else", "in",    "instanceof",
+    "new",   "return", "throw", "typeof", "void", "yield", NULL,
+};
 
 static bool es_peek_matches(EStream *es, uint32_t k, const char *str) {
   for (uint32_t j = 0; str[j]; j++) {
@@ -640,6 +668,20 @@ static int64_t look_behind_for_keyword(EStream *es, int64_t pos,
   return -1;
 }
 
+// endsWithOperandKeyword: whether a whole operand keyword ends at buf index
+// `pos`; one after a "." is a property name.
+static bool ends_with_operand_keyword(EStream *es, int64_t pos) {
+  int32_t c = es_at(es, pos);
+  if (c < 'a' || c > 'z') return false;
+  for (int i = 0; OPERAND_KEYWORDS[i]; i++) {
+    int64_t start = look_behind_for(es, pos, OPERAND_KEYWORDS[i]);
+    if (start != -1 && !is_word_or_period_code(es_at(es, start - 1))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // lookBehindForOperator: `pos` is a buf index just past the candidate.
 static int64_t look_behind_for_operator(EStream *es, ExprState *e,
                                         int64_t pos) {
@@ -655,10 +697,12 @@ static int64_t look_behind_for_operator(EStream *es, ExprState *e,
 
     case '!': {
       // After an operand, `!` is a TypeScript non-null assertion (postfix),
-      // as is each `!` of a run after one (`x!!`); after a keyword operator
-      // (`typeof!a`, `a in!b`) it is the prefix `!`.
+      // as is each `!` of a run after one (`x!!`), spaced or not (`x !`);
+      // after an operator or keyword (`typeof!a`, `a in !b`, `return !a`) it
+      // is the prefix `!`.
       int64_t operand_end = cur_pos - 1;
       while (es_at(es, operand_end) == '!') operand_end--;
+      operand_end = look_behind_while_ws(es, operand_end) - 1;
       int32_t operand = es_at(es, operand_end);
       switch (operand) {
         case ')': case ']': case '"': case '\'': case '`':
@@ -667,8 +711,7 @@ static int64_t look_behind_for_operator(EStream *es, ExprState *e,
           return is_word_code(operand) &&
                          look_behind_for_operator(es, e, operand_end + 1) ==
                              -1 &&
-                         look_behind_for_keyword(es, operand_end,
-                                                 RELATIONAL_KEYWORDS) == -1
+                         !ends_with_operand_keyword(es, operand_end)
                      ? -1
                      : (cur_pos < 0 ? 0 : cur_pos);
       }
@@ -771,6 +814,8 @@ static int64_t look_ahead_for_operator(EStream *es, ExprState *e, uint32_t k) {
   }
 }
 
+// Whether a "/" after `c` is a division. A word char counts as an operand
+// here; is_regexp_start also tells an operand keyword from one.
 static bool can_follow_division(int32_t c) {
   if (is_word_code(c)) return true;
   switch (c) {
@@ -782,6 +827,24 @@ static bool can_follow_division(int32_t c) {
   }
 }
 
+// isRegExpStart: whether a "/" (not a comment) at the logical position starts
+// a regular expression rather than a division, judged by what precedes it.
+// The cursor sees past the token start, as the parser reads the whole source.
+static bool is_regexp_start(Scanner *s) {
+  Cursor *cur = &s->cur;
+  if (!is_word_code(cur->prev_nonws_char)) {
+    return !can_follow_division(cur->prev_nonws_char);
+  }
+  for (int i = 0; OPERAND_KEYWORDS[i]; i++) {
+    size_t len = strlen(OPERAND_KEYWORDS[i]);
+    if (cur->word_len == len &&
+        memcmp(cur->word, OPERAND_KEYWORDS[i], len) == 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
 static void es_consume_ws(EStream *es) {
   while (true) {
     int32_t c = es_peek(es, 0);
@@ -790,8 +853,11 @@ static void es_consume_ws(EStream *es) {
   }
 }
 
-// checkForOperators(parser, expression, eol)
-static bool check_for_operators(EStream *es, ExprState *e, bool eol) {
+// checkForOperators(parser, expression, eol). Its look-ahead skips the
+// whitespace from `first` chars ahead: 1 (past the current whitespace char),
+// or 0 for a caller that has consumed the whitespace already.
+static bool check_for_operators_from(EStream *es, ExprState *e, bool eol,
+                                     uint32_t first) {
   if (!e->cfg.operators) return false;
   Scanner *s = es->s;
 
@@ -802,7 +868,7 @@ static bool check_for_operators(EStream *es, ExprState *e, bool eol) {
 
   bool terminated_by_eol = e->cfg.terminated_by_eol || is_concise(s);
   if (!(terminated_by_eol && eol)) {
-    uint32_t k = 1;
+    uint32_t k = first;
     while (true) {
       int32_t c = es_peek(es, k);
       if (c >= 0 && (terminated_by_eol ? is_indent_code(c) : is_ws(c))) k++;
@@ -831,6 +897,10 @@ static bool check_for_operators(EStream *es, ExprState *e, bool eol) {
   }
 
   return false;
+}
+
+static bool check_for_operators(EStream *es, ExprState *e, bool eol) {
+  return check_for_operators_from(es, e, eol, 1);
 }
 
 static bool scan_expr_inner(EStream *es, ExprState *e);
@@ -928,6 +998,77 @@ static bool sub_scan_regex(EStream *es) {
   }
 }
 
+// isEndedByCloser: an expression a closer ends (`(…)`, `{…}`, `<…>`, `|…|`,
+// `${…}`) is unfinished at EOF, in concise mode too. The tag params pieces
+// are all parts of the parser's one `|…|` expression.
+static bool is_ended_by_closer(uint8_t term) {
+  switch (term) {
+    case TERM_CLOSE_PAREN: case TERM_CLOSE_CURLY: case TERM_CLOSE_ANGLE:
+    case TERM_PIPE: case TERM_PARAM_PATTERN: case TERM_PARAM_TYPE:
+    case TERM_PARAM_DEFAULT:
+      return true;
+    default:
+      return false;
+  }
+}
+
+static bool is_attr_name_term(uint8_t term) {
+  return term == TERM_HTML_ATTR_NAME || term == TERM_CONCISE_ATTR_NAME ||
+         term == TERM_CONCISE_GROUPED_ATTR_NAME;
+}
+
+// isOnlyComments: whether the expression so far (from its first char) holds
+// nothing but comments and whitespace, which cannot end a whitespace
+// terminated value: `x=/* note */ 1` holds `1`. The expression scan consumed
+// any comment here whole, so each one closes within the range.
+static bool is_only_comments(EStream *es, ExprState *e) {
+  // A resumed token (a tag var type) is not where the expression starts.
+  if (e->cfg.resume_lookbehind) return false;
+  Scanner *s = es->s;
+  uint32_t end = s->buf_len;
+  uint32_t i = es->start;
+  if (i >= end || s->buf[i] != '/') return false;
+  while (i < end) {
+    int32_t c = (int32_t)(uint8_t)s->buf[i];
+    if (is_ws(c)) {
+      i++;
+    } else if (c != '/' || i + 1 >= end) {
+      return false;
+    } else if (s->buf[i + 1] == '*') {
+      i += 2;
+      while (i + 1 < end && !(s->buf[i] == '*' && s->buf[i + 1] == '/')) i++;
+      if (i + 1 >= end) return false;
+      i += 2;
+    } else if (s->buf[i + 1] == '/') {
+      i += 2;
+      while (i < end && !is_line((int32_t)(uint8_t)s->buf[i])) i++;
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Whitespace after only comments (eg `x=/* note */ 1`) cannot end the value.
+// The parser skips it a run at a time, looking ahead for an operator at each
+// step (but the newline right after a line comment); no operator ends a
+// comment, so each look-ahead reaches the same char after the whitespace.
+// Consuming all of it first and looking ahead once from there is the same
+// scan, and keeps the token end in step (it cannot be marked behind the
+// look-ahead). In concise mode a newline still ends the value.
+static void skip_comment_only_ws(EStream *es, ExprState *e) {
+  bool concise = is_concise(es->s);
+  bool look = false;
+  for (;;) {
+    int32_t c = es_peek(es, 0);
+    if (c < 0 || !is_ws(c) || (concise && is_line(c))) break;
+    if (!is_line(c) || !e->was_comment) look = true;
+    if (is_line(c)) e->was_comment = false;
+    es_next(es);
+  }
+  if (look) check_for_operators_from(es, e, false, 0);
+}
+
 // The core of EXPRESSION.parse. On success the logical position sits at the
 // terminator (not consumed). Returns false on parser-error paths.
 static bool scan_expr_inner(EStream *es, ExprState *e) {
@@ -938,9 +1079,13 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
 
     if (code < 0) {
       // EOF
-      if (!e->group_len && (is_concise(s) || e->cfg.terminated_by_eol)) {
+      if (!e->group_len && (is_concise(s) || e->cfg.terminated_by_eol) &&
+          !is_ended_by_closer(e->cfg.terminator)) {
         return true;
       }
+      // An attribute name, eg one still being typed in `<div foo`, is
+      // reported; the open tag then fails at the EOF.
+      if (!e->group_len && is_attr_name_term(e->cfg.terminator)) return true;
       return false;
     }
 
@@ -949,6 +1094,13 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
       uint32_t len = (code == '\r' && es_peek(es, 1) == '\n') ? 2 : 1;
       uint32_t before = s->buf_len;
       int32_t after_newline = es_peek(es, len);
+
+      // In html mode a newline after only comments cannot end the value.
+      if (!e->group_len && e->cfg.terminated_by_whitespace &&
+          !is_concise(s) && is_only_comments(es, e)) {
+        skip_comment_only_ws(es, e);
+        continue;
+      }
 
       if (!e->group_len &&
           (e->cfg.terminated_by_eol || e->cfg.terminated_by_whitespace) &&
@@ -972,6 +1124,10 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
 
     if (!e->group_len) {
       if (e->cfg.terminated_by_whitespace && is_ws(code)) {
+        if (is_only_comments(es, e)) {
+          skip_comment_only_ws(es, e);
+          continue;
+        }
         if (!check_for_operators(es, e, false)) return true;
         continue;
       }
@@ -1085,7 +1241,7 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
             break;
           }
           default:
-            if (can_follow_division(es_prev_nonws(es))) {
+            if (!is_regexp_start(s)) {
               es_next(es);
               es_consume_ws(es);
               continue;
@@ -1220,6 +1376,21 @@ static bool es_consume_block_comment(EStream *es) {
   }
 }
 
+// Consume a "<!--" comment through its closing "-->"; false at EOF
+// (MALFORMED_COMMENT). It ends at the first "-->", so a "->" inside it (eg
+// "a->b") is content; the last hyphen of "<!--" counts, so "<!--->" closes.
+static bool es_consume_html_comment(EStream *es) {
+  for (int i = 0; i < 4; i++) es_next_mark(es);  // <!--
+  uint32_t hyphens = 1;
+  while (true) {
+    int32_t c = es_peek(es, 0);
+    if (c < 0) return false;
+    es_next_mark(es);
+    if (c == '>' && hyphens >= 2) return true;
+    hyphens = c == '-' ? hyphens + 1 : 0;
+  }
+}
+
 // --------------------------------------------------------------------------
 // Tag bookkeeping
 // --------------------------------------------------------------------------
@@ -1228,15 +1399,16 @@ static bool es_consume_block_comment(EStream *es) {
 // replaces): html void elements plus openTagOnly core tags are void;
 // text:true core tags are text; statement:true core tags (and class, kept
 // for class-API compatibility) are statements.
+static const char *const TEXT_TAGS[] = {
+    "script", "style", "html-script", "html-style", "html-comment", NULL,
+};
+
 static uint8_t classify_tag_name(Scanner *s) {
   static const char *const VOID_TAGS[] = {
       "area",      "base", "br",     "col",   "hr",    "embed", "img",
       "input",     "link", "meta",   "param", "source", "track", "wbr",
       "const",     "debug", "id",    "let",   "lifecycle",
       "log",       "return", NULL,
-  };
-  static const char *const TEXT_TAGS[] = {
-      "script", "style", "html-script", "html-style", "html-comment", NULL,
   };
   static const char *const STATEMENT_TAGS[] = {
       "import", "export", "static", "class", "server", "client", NULL,
@@ -1923,26 +2095,138 @@ static enum PhResult check_placeholder(Scanner *s, EStream *es,
   return valid[ESCAPE] ? PH_BOUNDARY : PH_NO;
 }
 
+// Whether the text tag's closing name and ">" (or just ">", for "</>") are
+// `k` chars ahead (peeks only). Only a TEXT_TAGS name opens parsed text, so
+// it is compared char by char: a mismatch stops the lookahead, which then
+// queued just a name prefix that no token boundary falls within, so the
+// token end keeps being marked past it (a hash compare would queue a whole
+// name's worth of chars, maybe the start of the real closing tag).
+static bool close_tag_name_ahead(TagFrame *t, EStream *es, uint32_t k) {
+  if (es_peek(es, k) == '>') return true;  // </>
+  for (int i = 0; TEXT_TAGS[i]; i++) {
+    uint32_t len = (uint32_t)strlen(TEXT_TAGS[i]);
+    if (len != t->name_len || hash_str(TEXT_TAGS[i]) != t->name_hash) {
+      continue;
+    }
+    for (uint32_t j = 0; j < len; j++) {
+      if (es_peek(es, k + j) != (int32_t)TEXT_TAGS[i][j]) return false;
+    }
+    return es_peek(es, k + len) == '>';
+  }
+  return false;
+}
+
 // Try to match the parsed-text closing tag at the current position (peeks
 // only). checkForClosingTag in CLOSE_TAG.ts.
 static bool peek_parsed_close_tag(Scanner *s, EStream *es) {
   TagFrame *t = top_tag(s);
   if (!t) return false;
   if (es_peek(es, 0) != '<' || es_peek(es, 1) != '/') return false;
-  if (es_peek(es, 2) == '>') return true;  // </>
-  uint32_t len = t->name_len;
-  uint32_t h = HASH_INIT;
-  for (uint32_t i = 0; i < len; i++) {
-    int32_t c = es_peek(es, 2 + i);
-    if (c < 0) return false;
-    h = hash_push(h, c);
+  return close_tag_name_ahead(t, es, 2);
+}
+
+// A backslash before one of these in a text body escapes it (eg CSS `.a\"`
+// is text, not a string start); before "<" or a newline it does not, so
+// "\</style>" still closes the tag and a delimited block still ends.
+static bool is_escapable_parsed_text_code(int32_t c) {
+  return c == '"' || c == '\'' || c == '`' || c == '/' || c == '\\';
+}
+
+// In a parsed string any char is escaped (eg the quote of `"a\"b"`).
+static bool is_escapable_parsed_string_code(int32_t c) { return c >= 0; }
+
+// A backslash run no placeholder follows is text: its pairs are escaped
+// backslashes and an odd one out escapes the next char when `escapable`
+// accepts it. check_placeholder has consumed the run when it started the
+// token (PH_CONSUMED, so the buffer holds just the run), otherwise nothing.
+static void consume_escape(EStream *es, enum PhResult r,
+                           bool (*escapable)(int32_t)) {
+  uint32_t run = 0;
+  if (r == PH_CONSUMED) {
+    run = es->s->buf_len;
+  } else {
+    while (es_peek(es, 0) == '\\') {
+      es_next_mark(es);
+      run++;
+    }
   }
-  return h == t->name_hash && es_peek(es, 2 + len) == '>';
+  if (run % 2 && escapable(es_peek(es, 0))) es_next_mark(es);
+}
+
+// skipRegExp in PARSED_TEXT_CONTENT: the length of the rest of a regular
+// expression whose "/" was just consumed, through its closing "/" (peeks
+// only), or 0 when no "/" closes it on its line before a "</", which may be
+// the closing tag, or a placeholder, which a CSS body's `url(/${dir}/a.png)`
+// must keep.
+static uint32_t regexp_rest_len(EStream *es) {
+  bool in_charset = false;
+  for (uint32_t k = 0;; k++) {
+    int32_t c = es_peek(es, k);
+    switch (c) {
+      case -1:
+      case '\n':
+      case '\r':
+        return 0;
+      case '\\':
+        // the escaped char, which still cannot be a line terminator
+        c = es_peek(es, ++k);
+        if (c < 0 || is_line(c)) return 0;
+        break;
+      case '<':
+        if (es_peek(es, k + 1) == '/') return 0;
+        break;
+      case '$':
+        if (es_peek(es, k + 1) == '{') return 0;  // ${
+        if (es_peek(es, k + 1) == '!' && es_peek(es, k + 2) == '{') {
+          return 0;  // $!{
+        }
+        break;
+      case '[':
+        in_charset = true;
+        break;
+      case ']':
+        in_charset = false;
+        break;
+      case '/':
+        if (!in_charset) return k + 1;
+        break;
+    }
+  }
+}
+
+// The rest of a JS comment in a text body whose "/" was just consumed, if the
+// next char makes one: a "//" comment is text, but the closing tag still ends
+// it; a "/*" comment is consumed blindly (no placeholders, no close tags,
+// delimiters not considered). False at EOF inside "/*" (MALFORMED_COMMENT).
+static bool consume_parsed_comment_rest(Scanner *s, EStream *es) {
+  int32_t c = es_peek(es, 0);
+  if (c == '/') {
+    es_next_mark(es);
+    while (true) {
+      int32_t c2 = es_peek(es, 0);
+      if (c2 < 0 || is_line(c2)) break;
+      if (c2 == '<' && !is_concise(s) && peek_parsed_close_tag(s, es)) break;
+      es_next_mark(es);
+    }
+  } else if (c == '*') {
+    es_next_mark(es);
+    while (true) {
+      int32_t c2 = es_peek(es, 0);
+      if (c2 < 0) return false;
+      if (c2 == '*' && es_peek(es, 1) == '/') {
+        es_next_mark(es);
+        es_next_mark(es);
+        break;
+      }
+      es_next_mark(es);
+    }
+  }
+  return true;
 }
 
 // Scan one token of html / parsed-text content (or hand off to structure).
-static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
-                               TSSymbol *result) {
+static bool scan_frame_content_token(Scanner *s, TSLexer *lexer,
+                                     const bool *valid, TSSymbol *result) {
   ContentFrame *f = top_content(s);
   bool parsed = f->content == CONTENT_PARSED_TEXT;
   bool delim = f->delimiter_len > 0;
@@ -2074,6 +2358,10 @@ static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
           es_free(&es);
           if (!handled) *result = TEXT;
           return *result != TEXT || s->buf_len > 0;
+        }
+        if (c == '\\' && !handled) {
+          consume_escape(&es, r, is_escapable_parsed_string_code);
+          continue;
         }
         if (r == PH_NO) es_next_mark(&es);
         continue;
@@ -2307,32 +2595,18 @@ static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
           es_next_mark(&es);  // <
           es_next_mark(&es);  // /
           TagFrame *t = top_tag(s);
-          bool match = false;
-          if (t) {
-            if (es_peek(&es, 0) == '>') {
-              match = true;  // </>
-            } else {
-              uint32_t len = t->name_len;
-              uint32_t h = HASH_INIT;
-              bool ok = true;
-              for (uint32_t i = 0; i < len; i++) {
-                int32_t ci = es_peek(&es, i);
-                if (ci < 0) {
-                  ok = false;
-                  break;
-                }
-                h = hash_push(h, ci);
-              }
-              match = ok && h == t->name_hash &&
-                      es_peek(&es, len) == '>';
-            }
-          }
-          if (match) {
+          if (t && close_tag_name_ahead(t, &es, 0)) {
             es_free(&es);
             *result = CLOSE_TAG_START;
             return valid[CLOSE_TAG_START];
           }
-          continue;  // "</" is plain text
+          // "</" is plain text. The parser reads its "/" afresh, so it may
+          // start a comment (never a regular expression, after "<").
+          if (!consume_parsed_comment_rest(s, &es)) {
+            es_free(&es);
+            return false;  // MALFORMED_COMMENT
+          }
+          continue;
         }
         es_next_mark(&es);
         continue;
@@ -2342,26 +2616,11 @@ static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
 
       if (n1 == '!') {
         if (es_peek(&es, 2) == '-' && es_peek(&es, 3) == '-') {
-          // <!-- ... -> (the comment ends at the first "->")
+          // <!-- ... -->
           EMIT_TEXT_OR({
-            es_next_mark(&es);
-            es_next_mark(&es);
-            es_next_mark(&es);
-            es_next_mark(&es);
-            while (true) {
-              int32_t c2 = es_peek(&es, 0);
-              if (c2 < 0) {
-                es_free(&es);
-                return false;  // MALFORMED_COMMENT
-              }
-              if (c2 == '-' && es_peek(&es, 1) == '>') {
-                es_next_mark(&es);
-                es_next_mark(&es);
-                break;
-              }
-              es_next_mark(&es);
-            }
+            bool comment_ok = es_consume_html_comment(&es);
             es_free(&es);
+            if (!comment_ok) return false;  // MALFORMED_COMMENT
             *result = HTML_COMMENT;
             return valid[HTML_COMMENT];
           });
@@ -2487,41 +2746,21 @@ static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
     if (c == '/') {
       int32_t n1 = es_peek(&es, 1);
       if (parsed) {
-        if (n1 == '/') {
-          // JS line comment within parsed text: part of the text, but the
-          // closing tag is still recognized inside it.
-          es_next_mark(&es);
-          es_next_mark(&es);
-          while (true) {
-            int32_t c2 = es_peek(&es, 0);
-            if (c2 < 0 || is_line(c2)) break;
-            if (c2 == '<' && !is_concise(s) && peek_parsed_close_tag(s, &es))
-              break;
-            es_next_mark(&es);
-          }
-          continue;
-        }
-        if (n1 == '*') {
-          // JS block comment: consumed blindly (no placeholders, no close
-          // tags, delimiters not considered).
-          es_next_mark(&es);
-          es_next_mark(&es);
-          while (true) {
-            int32_t c2 = es_peek(&es, 0);
-            if (c2 < 0) {
-              es_free(&es);
-              return false;  // MALFORMED_COMMENT
-            }
-            if (c2 == '*' && es_peek(&es, 1) == '/') {
-              es_next_mark(&es);
-              es_next_mark(&es);
-              break;
-            }
-            es_next_mark(&es);
-          }
-          continue;
-        }
+        // A comment is text; otherwise skip a regular expression whole, so a
+        // quote or "//" in it is not lexed (a "/" that cannot close one on
+        // its line stays text). The "/" goes first, so a token ended within
+        // the regular expression lookahead still holds it.
+        bool regexp = n1 != '/' && n1 != '*' && is_regexp_start(s);
         es_next_mark(&es);
+        if (!consume_parsed_comment_rest(s, &es)) {
+          es_free(&es);
+          return false;  // MALFORMED_COMMENT
+        }
+        if (regexp) {
+          for (uint32_t i = regexp_rest_len(&es); i > 0; i--) {
+            es_next_mark(&es);
+          }
+        }
         continue;
       }
 
@@ -2570,6 +2809,10 @@ static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
         if (!handled) *result = TEXT;
         return *result != TEXT || s->buf_len > 0;
       }
+      if (parsed && c == '\\' && !handled) {
+        consume_escape(&es, r, is_escapable_parsed_text_code);
+        continue;
+      }
       if (r == PH_NO) es_next_mark(&es);
       continue;
     }
@@ -2577,6 +2820,20 @@ static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
     es_next_mark(&es);
   }
 #undef EMIT_TEXT_OR
+}
+
+static bool scan_frame_content(Scanner *s, TSLexer *lexer, const bool *valid,
+                               TSSymbol *result) {
+  ContentFrame *f = top_content(s);
+  uint8_t content_len = s->content_len;
+  if (!scan_frame_content_token(s, lexer, valid, result)) return false;
+  // A token can end before chars its lookahead went on to lex (the end
+  // cannot be marked behind a peek; the next scan lexes them again), so a
+  // string they opened or closed must not outlive it.
+  if (s->content_len == content_len && top_content(s) == f) {
+    f->pstring_quote = s->saved_pstring_quote;
+  }
+  return true;
 }
 
 // --------------------------------------------------------------------------
@@ -2639,21 +2896,9 @@ static bool scan_concise(Scanner *s, TSLexer *lexer, const bool *valid,
     if (c == '<') {
       if (es_peek(&es, 1) == '!' && es_peek(&es, 2) == '-' &&
           es_peek(&es, 3) == '-') {
-        for (int i = 0; i < 4; i++) es_next_mark(&es);
-        while (true) {
-          int32_t c2 = es_peek(&es, 0);
-          if (c2 < 0) {
-            es_free(&es);
-            return false;  // MALFORMED_COMMENT
-          }
-          if (c2 == '-' && es_peek(&es, 1) == '>') {
-            es_next_mark(&es);
-            es_next_mark(&es);
-            break;
-          }
-          es_next_mark(&es);
-        }
+        bool comment_ok = es_consume_html_comment(&es);
         es_free(&es);
+        if (!comment_ok) return false;  // MALFORMED_COMMENT
         *result = HTML_COMMENT;
         return valid[HTML_COMMENT];
       }
