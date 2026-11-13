@@ -9,7 +9,7 @@ const Marko = require("../../bindings/node");
 
 // A fresh parser per parse: a timed-out parse can poison subsequent parses
 // on the same instance.
-function makeParser() {
+export function makeParser() {
   const parser = new Parser();
   parser.setLanguage(Marko);
   // A scanner bug must fail the test, not hang the suite.
