@@ -1049,7 +1049,8 @@ static bool is_only_comments(EStream *es, ExprState *e) {
   return true;
 }
 
-// Whitespace after only comments (eg `x=/* note */ 1`) cannot end the value.
+// Whitespace after only comments, when a value follows (eg `x=/* note */ 1`),
+// does not end the value.
 // The parser skips it a run at a time, looking ahead for an operator at each
 // step (but the newline right after a line comment); no operator ends a
 // comment, so each look-ahead reaches the same char after the whitespace.
@@ -1067,6 +1068,19 @@ static void skip_comment_only_ws(EStream *es, ExprState *e) {
     es_next(es);
   }
   if (look) check_for_operators_from(es, e, false, 0);
+}
+
+// Whether a value follows the whitespace after only comments, which then
+// continues the expression (`x=/* note */ 1`). Where the value would end after
+// the whitespace anyway (`a=/* c */ >`, EOF, or a concise newline) it ends
+// before the whitespace, as any value does.
+static bool value_follows_comments(EStream *es, ExprState *e) {
+  bool concise = is_concise(es->s);
+  uint32_t k = 0;
+  int32_t c;
+  while ((c = es_peek(es, k)) >= 0 && is_ws(c) && !(concise && is_line(c))) k++;
+  if (c < 0 || is_line(c)) return false;
+  return !should_terminate(es, e, c, k);
 }
 
 // The core of EXPRESSION.parse. On success the logical position sits at the
@@ -1095,9 +1109,11 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
       uint32_t before = s->buf_len;
       int32_t after_newline = es_peek(es, len);
 
-      // In html mode a newline after only comments cannot end the value.
+      // In html mode a newline after only comments does not end the value
+      // when one follows.
       if (!e->group_len && e->cfg.terminated_by_whitespace &&
-          !is_concise(s) && is_only_comments(es, e)) {
+          !is_concise(s) && is_only_comments(es, e) &&
+          value_follows_comments(es, e)) {
         skip_comment_only_ws(es, e);
         continue;
       }
@@ -1124,7 +1140,7 @@ static bool scan_expr_inner(EStream *es, ExprState *e) {
 
     if (!e->group_len) {
       if (e->cfg.terminated_by_whitespace && is_ws(code)) {
-        if (is_only_comments(es, e)) {
+        if (is_only_comments(es, e) && value_follows_comments(es, e)) {
           skip_comment_only_ws(es, e);
           continue;
         }
