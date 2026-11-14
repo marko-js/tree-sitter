@@ -1413,10 +1413,11 @@ static bool es_consume_html_comment(EStream *es) {
 
 // Tag types follow the tags API (and the vscode tmLanguage grammar this
 // replaces): html void elements plus openTagOnly core tags are void;
-// text:true core tags are text; statement:true core tags (and class, kept
-// for class-API compatibility) are statements.
+// text:true html and core tags are text; statement:true core tags (and
+// class, kept for class-API compatibility) are statements.
 static const char *const TEXT_TAGS[] = {
-    "script", "style", "html-script", "html-style", "html-comment", NULL,
+    "script",     "style",        "textarea", "html-script",
+    "html-style", "html-comment", NULL,
 };
 
 static uint8_t classify_tag_name(Scanner *s) {
