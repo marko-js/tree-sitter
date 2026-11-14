@@ -107,6 +107,7 @@ export function parseEvents(src: string): Event[] {
             return TagType.void;
           case "script":
           case "style":
+          case "textarea":
           case "html-script":
           case "html-style":
           case "html-comment":
