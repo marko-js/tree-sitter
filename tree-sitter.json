@@ -16,7 +16,7 @@
     }
   ],
   "metadata": {
-    "version": "0.4.1",
+    "version": "0.5.0",
     "license": "MIT",
     "description": "Tree-sitter grammar for the Marko templating language",
     "links": {
