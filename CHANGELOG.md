@@ -1,5 +1,17 @@
 # @marko/tree-sitter
 
+## 0.5.0
+
+### Minor Changes
+
+- [#22](https://github.com/marko-js/tree-sitter/pull/22) [`d10d4bd`](https://github.com/marko-js/tree-sitter/commit/d10d4bdd147875ddadef0a52f2b5dc3a1bd263cc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Match htmljs-parser 5.21 and 5.22: an html comment ends at the first `-->` (so `<!-- a->b -->` is one comment), a `/` after a keyword an operand follows (`return /x/`, `typeof /x/`) starts a regular expression, and in a `<script>` or `<style>` body a backslash-escaped quote, backtick or slash is text, a regular expression literal is skipped whole, and any escape in a string is text. A spaced non-null `!` (`a=x ! b`) ends an unenclosed value while `return !x` keeps a prefix `!`, a value continues past leading comments (`x=/* note */ 1`), an html mode attribute name cut off by EOF (`<div foo`) is still an `attr_name`, and in concise mode an unclosed `(…`, `{…`, `<…`, `|…`, `$ {…` or `${…` at EOF is an error.
+
+### Patch Changes
+
+- [#24](https://github.com/marko-js/tree-sitter/pull/24) [`2b73897`](https://github.com/marko-js/tree-sitter/commit/2b73897707942d0dd25b17f26e8230dea2546f33) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Match htmljs-parser: an attribute value holding only a comment ends at the comment rather than taking in the whitespace before a `>` that ends the tag (`<div a=/* c */ >`).
+
+- [#25](https://github.com/marko-js/tree-sitter/pull/25) [`664b1b1`](https://github.com/marko-js/tree-sitter/commit/664b1b1fc707445c5e5cdcd9ac3707785b7ff775) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Parse a `<textarea>` body as text (with placeholders), as htmljs-parser and the Marko compiler do, rather than as html.
+
 ## 0.4.1
 
 ### Patch Changes
